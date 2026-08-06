@@ -4,673 +4,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Empresario Registration Form</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        min-height: 100vh;
-        color: #fafafa;
-        background:
-          radial-gradient(
-            ellipse 70% 55% at 50% 30%,
-            #24243a 20%,
-            #191924 75%,
-            #12121a 100%
-          ),
-          repeating-linear-gradient(
-            135deg,
-            #232335 0px,
-            #232335 2px,
-            transparent 2px,
-            transparent 32px
-          ),
-          repeating-linear-gradient(
-            45deg,
-            #1b1b27 0px,
-            #1b1b27 2px,
-            transparent 2px,
-            transparent 32px
-          ),
-          #15151d;
-        background-blend-mode: lighten;
-        background-size: cover, 44px 44px, 44px 44px, auto;
-        transition: background 0.4s;
-        overflow-x: hidden;
-        position: relative;
-      }
-
-      #email::placeholder {
-        color: rgba(1, 10, 22, 0.6);
-        font-style: italic;
-        transition: color 0.3s ease;
-      }
-
-      #email:focus::placeholder {
-        color: rgba(255, 255, 255, 0.3);
-      }
-
-      @keyframes gradientShift {
-        0% {
-          background-position: 0% 50%;
-        }
-
-        50% {
-          background-position: 100% 50%;
-        }
-
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-
-      .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-      }
-
-      .particle {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        animation: float 6s ease-in-out infinite;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-          opacity: 0.3;
-        }
-
-        50% {
-          transform: translateY(-20px) rotate(180deg);
-          opacity: 0.8;
-        }
-      }
-
-      .container {
-        max-width: 1000px;
-        margin: 30px auto;
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(10px);
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        position: relative;
-        z-index: 2;
-        animation: containerGlow 3s ease-in-out infinite alternate;
-      }
-
-      @keyframes containerGlow {
-        0% {
-          box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-        }
-
-        100% {
-          box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
-        }
-      }
-
-      .stepper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 40px;
-        gap: 0px;
-      }
-
-      .step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex: 1;
-        position: relative;
-        min-width: 0;
-      }
-
-      .step:not(:last-child)::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-  left: calc(100% + 23px);
-  width: calc(100% - 46px);
-        height: 2px;
-        background: linear-gradient(90deg, #444750, #23232d 90%);
-        z-index: 1;
-      }
-
-      .step.active:not(:last-child)::after {
-        background: linear-gradient(90deg, #b2b9c9 0%, #23232d 90%);
-      }
-
-      @media (max-width: 700px) {
-        .step:not(:last-child)::after {
-          width: calc(100% - 36px);
-          height: 2px;
-          left: 50%;
-          transform: translateY(-50%);
-        }
-      }
-
-      .step-circle {
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        background: linear-gradient(145deg, #2c2c37, #353540);
-        color: #f0f0f0;
-        font-size: 22px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid #51515f;
-        margin-bottom: 7px;
-        box-shadow: 0 2px 8px #23232a18;
-        transition: background 0.25s, border 0.25s, color 0.25s;
-        z-index: 2;
-      }
-
-      .step.active .step-circle {
-        background: #e6e6e9;
-        color: #22242c;
-        border-color: #b9b9ca;
-        font-weight: 800;
-        box-shadow: 0 0 0 4px #e6e6e940;
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-
-        50% {
-          transform: scale(1.05);
-        }
-
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      .step-title {
-        font-size: 13px;
-        color: #b7b7be;
-        text-align: center;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 0;
-        margin-bottom: 0;
-        transition: color 0.25s;
-        user-select: none;
-      }
-
-      .step.active .step-title {
-        color: #fff;
-      }
-
-      .step:not(:last-child)::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 100%;
-        height: 2.5px;
-        width: 100%;
-        background: linear-gradient(90deg, #444750, #23232d 90%);
-        z-index: 1;
-        transform: translateY(-50%);
-      }
-
-      .step.active:not(:last-child)::after {
-        background: linear-gradient(90deg, #b2b9c9 0%, #23232d 90%);
-      }
-
-      @media (max-width: 700px) {
-        .step:not(:last-child)::after {
-          width: 100%;
-          height: 2px;
-        }
-      }
-
-      .step-title {
-        font-size: 11.5px;
-        letter-spacing: 0.7px;
-      }
-
-      .step:not(:last-child)::after {
-        height: 2px;
-        width: calc(100% - 36px);
-      }
-
-      .form-section {
-        margin-top: 30px;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: bold;
-        transition: color 0.3s ease;
-      }
-
-      label:hover {
-        color: #fff;
-      }
-
-      input,
-      select,
-      textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-        transition: all 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      input:focus,
-      select:focus,
-      textarea:focus {
-        outline: none;
-        border-color: #fff;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      input::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      textarea {
-        resize: vertical;
-      }
-
-      .button,
-      .otp-btn {
-        background: linear-gradient(135deg, #444c5c, #2b2f3a);
-        color: #f0f0f0;
-        padding: 12px 22px;
-        font-size: 15px;
-        font-weight: 600;
-        border: 1.5px solid #505769;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-        flex-shrink: 0;
-        user-select: none;
-        position: relative;
-        overflow: hidden;
-        outline-offset: 2px;
-        transform: translateY(0);
-      }
-
-      .otp-btn:hover,
-      .otp-btn:focus,
-      .button:hover,
-      .button:focus {
-        background: linear-gradient(135deg, #5a6280, #3a3f57);
-        border-color: #7383b5;
-        color: #ffffff;
-        box-shadow: 0 4px 15px #7383b5a0;
-        outline: none;
-        transform: translateY(-2px);
-      }
-
-      .otp-btn:active,
-      .button:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-        transition: all 0.1s ease;
-      }
-
-      @media (max-width: 700px) {
-        .otp-btn {
-          min-width: 100%;
-          padding: 12px 0;
-          font-size: 16px;
-        }
-      }
-
-      .row {
-        display: flex;
-        gap: 20px;
-      }
-
-      .row > div {
-        flex: 1;
-      }
-
-      .email-row {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 16px;
-        align-items: center;
-      }
-
-      .email-row input[type="email"] {
-        flex: 1;
-        background: rgba(255, 255, 255, 0.9);
-        color: #000;
-        margin-bottom: 0;
-      }
-
-      .email-row .otp-btn {
-        margin-bottom: 0;
-        min-width: 140px;
-      }
-
-      .next-btn {
-        background: linear-gradient(135deg, #444c5c, #2b2f3a);
-        color: #f0f0f0;
-        padding: 12px 22px;
-        font-size: 15px;
-        font-weight: 600;
-        border: 1.5px solid #505769;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-        flex-shrink: 0;
-        user-select: none;
-        position: relative;
-        overflow: hidden;
-        outline-offset: 2px;
-        margin-left: 8px;
-        transform: translateY(0);
-      }
-
-      .next-btn:hover,
-      .next-btn:focus {
-        background: linear-gradient(135deg, #5a6280, #3a3f57);
-        border-color: #7383b5;
-        color: #ffffff;
-        box-shadow: 0 4px 15px #7383b5a0;
-        outline: none;
-        transform: translateY(-2px);
-      }
-
-      .next-btn:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-        transition: all 0.1s ease;
-      }
-
-      .next-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: translateY(0);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-      }
-
-      .next-btn:disabled:hover {
-        transform: translateY(0);
-        background: linear-gradient(135deg, #444c5c, #2b2f3a);
-        border-color: #505769;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-      }
-
-      @media (max-width: 700px) {
-        .next-btn {
-          min-width: 100%;
-          padding: 12px 0;
-          font-size: 16px;
-        }
-      }
-
-      .required {
-        color: #ff6b6b;
-        margin-left: 2px;
-        animation: blink 2s infinite;
-      }
-
-      @keyframes blink {
-        0%,
-        50% {
-          opacity: 1;
-        }
-
-        51%,
-        100% {
-          opacity: 0.5;
-        }
-      }
-
-      .section-title {
-        font-size: 20px;
-        color: #fff;
-        margin-top: 40px;
-        margin-bottom: 28px;
-        border-bottom: 2px solid #fff;
-        padding-bottom: 10px;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      }
-
-      @media (max-width: 700px) {
-        .container {
-          padding: 10px;
-        }
-
-        .stepper {
-          flex-direction: column;
-          gap: 16px;
-        }
-
-        .email-row {
-          flex-direction: column;
-          gap: 20px;
-          align-items: center;
-        }
-      }
-
-      .error-message {
-        color: #ff6b6b;
-        font-size: 14px;
-        margin-bottom: 10px;
-        display: none;
-      }
-
-      .success-message {
-        background: linear-gradient(135deg, #4caf50, #45a049);
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-        margin: 20px 0;
-        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-        border: 2px solid rgba(76, 175, 80, 0.5);
-        display: none;
-        animation: slideIn 0.5s ease-out;
-      }
-
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      .form-step {
-        opacity: 1;
-        transform: translateX(0);
-        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        position: relative;
-      }
-
-      .form-step.fade-out {
-        opacity: 0;
-        transform: translateX(-30px);
-      }
-
-      .form-step.fade-in {
-        opacity: 0;
-        transform: translateX(30px);
-        animation: slideInRight 0.6s ease-out forwards;
-      }
-
-      @keyframes slideInRight {
-        from {
-          opacity: 0;
-          transform: translateX(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes slideOutLeft {
-        from {
-          opacity: 1;
-          transform: translateX(0);
-        }
-        to {
-          opacity: 0;
-          transform: translateX(-30px);
-        }
-      }
-
-      .step {
-        transition: all 0.3s ease-in-out;
-      }
-
-      .step-circle {
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .step.active .step-circle {
-        animation: pulse 0.6s ease-in-out;
-      }
-
-      select {
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: border 0.3s, background 0.3s;
-      }
-
-      select:focus {
-        border-color: #fff;
-        background: rgba(255, 255, 255, 0.12);
-        outline: none;
-      }
-
-      select option {
-        background: #222;
-        color: #fff;
-      }
-
-      select option:hover,
-      select option:focus {
-        background: #fff;
-        color: #000;
-      }
-
-      @-moz-document url-prefix() {
-        select option:hover,
-        select option:focus {
-          background: #fff !important;
-          color: #000 !important;
-        }
-      }
-
-      .reg-banner {
-        width: 98vw;
-        background: linear-gradient(
-          100deg,
-          #28243e 0%,
-          #232526 55%,
-          #4b23a0 100%
-        );
-        color: #ffffff;
-        padding: 40px 16px 28px 16px;
-        text-align: center;
-        margin-bottom: 22px;
-        border-bottom: 2.5px solid #7f52ff90;
-        border-radius: 0 0 22px 22px;
-        position: relative;
-        box-shadow: 0 8px 32px 0 #1c174920, 0 2px 36px 0 #7f52ff33;
-        z-index: 3;
-        overflow: hidden;
-      }
-
-      .reg-banner::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at 60% 30%,
-          #7f52ff33 0%,
-          transparent 70%
-        );
-        z-index: 1;
-        pointer-events: none;
-        opacity: 0.66;
-      }
-
-      .reg-banner h1 {
-        font-size: 2.35rem;
-        margin-bottom: 10px;
-        margin-top: 0;
-        letter-spacing: 1.5px;
-        font-weight: 800;
-        background: linear-gradient(
-          90deg,
-          #a996ff 30%,
-          #fffbe8 65%,
-          #8f5cfa 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .reg-banner p {
-        font-size: 1.22rem;
-        margin: 0;
-        font-weight: 500;
-        color: #c7bfff;
-        text-shadow: 0 1px 10px #4b23a055;
-      }
-
-      @media (max-width: 700px) {
-        .reg-banner {
-          padding: 20px 8px 12px 8px;
-          border-radius: 0 0 10px 10px;
-          margin-bottom: 12px;
-        }
-
-        .reg-banner h1 {
-          font-size: 1.18rem;
-        }
-
-        .reg-banner p {
-          font-size: 0.97rem;
-        }
-      }
-    </style>
-  </head>
+      <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { padding: 0; margin: 0; }
+    body { font-family: 'Inter', sans-serif; background-color: #fff; color: #111; overflow-x: hidden; margin: 0;}
+    .split-container { display: flex; min-height: 100vh; width: 100%; margin: 0; padding: 0; }
+
+    /* LEFT SIDE - DARK SPLASH */
+    .split-left {
+      width: 50%;
+      background: linear-gradient(rgba(10, 10, 15, 0.85), rgba(10, 10, 15, 0.95)), url('images/event-images/images (4).jpeg') center/cover;
+      padding: 4rem 5rem;
+      display: flex; flex-direction: column; color: #fff; position: fixed; height: 100vh; top: 0; left: 0;
+    }
+    .back-btn { color: #999; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; transition: color 0.3s; }
+    .back-btn:hover { color: #fff; }
+    .left-tagline { color: #1a73e8; font-weight: 700; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase; margin-top: 4rem; }
+    .left-heading { font-family: 'Playfair Display', serif; font-size: 4.2rem; font-weight: 700; line-height: 1.1; margin: 2rem 0; letter-spacing: -1px; }
+    .left-heading span { color: #1a73e8; }
+    .left-desc { font-size: 1rem; line-height: 1.6; color: #b0b0b8; margin-bottom: 2rem; max-width: 480px; }
+
+    /* RIGHT SIDE - FORM */
+    .split-right {
+      width: 50%; margin-left: 50%; padding: 4rem 5rem; background-color: #fff; min-height: 100vh;
+    }
+    .container { max-width: 100%; box-shadow: none; border: none; background: #fff; padding: 0; }
+    .right-tagline { color: #1a73e8; font-weight: 700; letter-spacing: 2px; font-size: 0.75rem; margin-bottom: 2.5rem; text-transform: uppercase; display: block; }
+    .section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; color: #111; letter-spacing: -0.5px; margin-top: 0; border: none; text-shadow: none; padding-bottom: 0; }
+
+    .stepper { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; position: relative; border-bottom: 1px solid #f0f0f0; margin-bottom: 2.5rem; padding-bottom: 1rem; }
+    .step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+    
+    .step-circle { display: none !important; }
+    .step:not(:last-child)::after { display: none !important; }
+    
+    .step-title { font-size: 0.8rem; font-weight: 700; color: #b0b0b8; margin-top: 0; padding: 10px 0; text-align: center; text-transform: uppercase; letter-spacing: 1px; transition: color 0.25s;}
+    .step.active .step-title { color: #1a73e8; }
+
+    .form-step label { display: block; font-size: 0.75rem; font-weight: 600; color: #888; letter-spacing: 1px; margin-bottom: 0.4rem; text-transform: uppercase; margin-top: 1.8rem; }
+    .required { color: #d93025; font-weight: 700; animation: none; margin-left: 2px;}
+    
+    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], select, textarea {
+      width: 100%; background: transparent; border: none; border-bottom: 1px solid #e1e1e1; color: #111 !important; font-size: 1rem; padding: 10px 0; outline: none !important; border-radius: 0; transition: border 0.3s; font-family: inherit; margin-bottom: 0.5rem; box-shadow: none; text-shadow: none;
+    }
+    input::placeholder, textarea::placeholder { color: #ccc !important; font-style: normal !important; text-shadow: none; }
+    input:focus, select:focus, textarea:focus { border-bottom: 2px solid #1a73e8; box-shadow: none !important; background: transparent; border-color: #1a73e8 !important; }
+    select { cursor: pointer; color: #111; }
+    textarea { resize: vertical; margin-top: 5px; font-family: inherit; }
+
+    .email-row { display: flex; gap: 15px; align-items: flex-end; margin-bottom: 16px;}
+    .email-row input { flex: 1; margin-bottom: 0; background: transparent; }
+    .email-row .otp-btn { margin-top: 0 !important; width: 140px; padding: 0 !important; height: 46px; margin-bottom: 0;}
+
+    /* Button Geometry (Flat and Square) */
+    .next-btn, .submit-btn, .button, .otp-btn {
+      background: #1a73e8 !important; color: #fff !important; border: none; text-transform: uppercase; font-size: 0.85rem !important; padding: 14px 28px !important; letter-spacing: 1px; flex-shrink: 0; margin-top: 2rem !important; cursor: pointer; display: inline-block; transition: background-color 0.3s; border-radius: 4px !important; box-shadow: none !important; outline: none; outline-offset: 0; transform: none;
+    }
+    .next-btn:hover, .submit-btn:hover, .otp-btn:hover, .button:hover { background: #1557b0 !important; transform: none; box-shadow: none; border-color: transparent;}
+    
+    .next-btn:disabled, .otp-btn:disabled, .button:disabled {
+      background-color: #d0d0d0 !important; color: #fff !important; cursor: not-allowed !important; opacity: 1 !important; box-shadow: none; border-color: transparent; border: none; transform: none;}
+    
+    .hidden { display: none !important; }
+    .error-message { font-size: 0.8rem; color: #d93025; margin-top: 8px; display: none; }
+    .tokens.success, .success-message { color: #28a745; font-size: 1rem; font-weight: 600; margin-top: 20px; background: transparent; border: none; box-shadow: none; animation: none;}
+
+    .particles, .reg-banner, .social-sidebar { display: none !important; }
+
+    @media (max-width: 992px) {
+      .split-container { flex-direction: column; }
+      .split-left, .split-right { width: 100%; position: relative; height: auto; min-height: 50vh; margin: 0; padding: 3rem 2rem; }
+      .left-heading { font-size: 2.8rem; }
+      .email-row { flex-direction: column; align-items: flex-start; }
+      .email-row .otp-btn { margin-top: 1rem !important; width: 100%; }
+      .next-btn { min-width: 100%; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">\n</head>
 
   <body>
     <div class="particles" id="particles"></div>
@@ -678,23 +90,35 @@
       <h1>Empresario Startup Registration 2026</h1>
     </div>
 
-    <div class="container">
+    
+<div class="split-container">
+  <!-- LEFT SIDE -->
+  <div class="split-left">
+    <a href="index.html" class="back-btn">&larr; BACK TO HOME</a>
+    <div class="left-tagline">/ EMPRESARIO STARTUP REGISTRATION</div>
+    <h1 class="left-heading">Register your<br><span style="color: #1a73e8;">perfect</span> startup<br>today.</h1>
+    <p class="left-desc">We craft the ultimate platform for founders to connect with investors, validate ideas, and raise real capital — built to launch your journey.</p>
+  </div>
+  <!-- RIGHT SIDE -->
+  <div class="split-right">
+    <div class="right-tagline">/ REGISTRATION</div>
+<div class="container">
       <div class="stepper">
         <div class="step active" id="step-1-indicator">
           <div class="step-circle">1</div>
-          <div class="step-title">EMAIL VERIFICATION</div>
+          <div class="step-title">STEP 1</div>
         </div>
         <div class="step" id="step-2-indicator">
           <div class="step-circle">2</div>
-          <div class="step-title">PERSONAL INFORMATION</div>
+          <div class="step-title">STEP 2</div>
         </div>
         <div class="step" id="step-3-indicator">
           <div class="step-circle">3</div>
-          <div class="step-title">STARTUP INFORMATION</div>
+          <div class="step-title">STEP 3</div>
         </div>
         <div class="step" id="step-4-indicator">
           <div class="step-circle">4</div>
-          <div class="step-title">BUSINESS OVERVIEW</div>
+          <div class="step-title">STEP 4</div>
         </div>
       </div>
       <!-- Step 1: Email Verification -->
@@ -1374,5 +798,5 @@
 </div>
 
 
-  </body>
+  </div></div></body>
 </html>
