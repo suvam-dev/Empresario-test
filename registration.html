@@ -481,13 +481,12 @@
             <div id="email-error" class="error-message">
               Please enter a valid email address.
             </div>
-            <div id="otp-section" class="hidden">
+            <div id="otp-section" class="hidden" style="margin-top: 20px;">
               <label>Enter OTP <span class="required">*</span></label>
               <input type="text" id="otp" maxlength="6" placeholder="Enter OTP" required />
               <div id="otp-error" class="error-message">
                 Please enter the OTP sent to your email.
               </div>
-
             </div>
             <button type="button" class="next-btn" id="nextBtn" disabled>
               Verify OTP
@@ -618,6 +617,23 @@
         }
 
         const formEl = document.getElementById("regForm");
+        async function saveToSupabase(data) {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/empresario_registrations`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`,
+              "Prefer": "resolution=merge-duplicates"
+            },
+            body: JSON.stringify(data)
+          });
+          if (!res.ok) {
+            const errBody = await res.json().catch(() => ({}));
+            throw new Error(errBody.message || `Supabase error: ${res.status}`);
+          }
+        }
+
         formEl.addEventListener("submit", async (e) => {
           e.preventDefault();
           const submitBtn = document.getElementById("submitBtn");
@@ -652,6 +668,9 @@
             const text = await res.text();
             console.log("Register response:", text);
             if (text.trim().toLowerCase() === "ok") {
+              // Save to Supabase
+              await saveToSupabase(payload);
+
               const formEl = document.getElementById("regForm");
               formEl.innerHTML = "";
               formEl.appendChild(successMessage);
@@ -674,6 +693,10 @@
                 },
                 body: new URLSearchParams({ action: "register", ...payload }),
               });
+
+              // Save to Supabase
+              await saveToSupabase(payload);
+
               // With no-cors we can't read body; assume success if no exception
               const formEl = document.getElementById("regForm");
               formEl.innerHTML = "";
@@ -712,7 +735,9 @@
 
         let otpSent = false;
         let otpVerified = false;
-        let mockOtp = "";
+
+        const SUPABASE_URL = "https://jtrrfhmnonxnjrkeydvl.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0cnJmaG1ub254bmpya2V5ZHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNzE1MjEsImV4cCI6MjA5ODc0NzUyMX0.QmfTni_jHGS3H-ny7oWlTA0kfGqwRmdH9HbM8vCuMUE";
 
         function validateEmail(email) {
           return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
@@ -727,35 +752,36 @@
             emailError.style.display = "none";
           }
 
+          sendOtpBtn.disabled = true;
+          sendOtpBtn.innerHTML = "Sending...";
+
           try {
-            const res = await fetch(scriptURL, {
+            const res = await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
               method: "POST",
-              mode: "cors",
               headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY,
               },
-              body: new URLSearchParams({
-                action: "sendOtp",
+              body: JSON.stringify({
                 email,
-              }),
+                create_user: true
+              })
             });
 
             if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
+              const errData = await res.json().catch(() => ({}));
+              throw new Error(errData.msg || errData.message || `HTTP error! status: ${res.status}`);
             }
 
-            const text = await res.text();
-            console.log("OTP Response:", text);
-            if (text === "OTP sent") {
-              otpSection.classList.remove("hidden");
-              otpSent = true;
-              alert("Here is your OTP for Early Birds access to Empresario (valid for 5 minutes).");
-            } else {
-              alert("Server response: " + text);
-            }
+            otpSection.classList.remove("hidden");
+            otpSent = true;
+            sendOtpBtn.innerHTML = "OTP Sent!";
+            alert("A 6-digit verification code has been sent to your email. Please check your inbox.");
           } catch (e) {
             console.error("OTP Error:", e);
             alert("Error sending OTP: " + e.message + ". Please try again.");
+            sendOtpBtn.disabled = false;
+            sendOtpBtn.innerHTML = "Send OTP";
           }
           validateStep1();
         };
@@ -770,7 +796,6 @@
             } else {
               otpError.style.display = "none";
             }
-
           }
           nextBtn.disabled = !valid;
         }
@@ -788,47 +813,67 @@
           nextBtn.innerHTML = "Verifying...";
 
           try {
-            const res = await fetch(scriptURL, {
+            // Dual-type verification: First try signup
+            let res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
               method: "POST",
-              mode: "cors",
               headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY,
               },
-              body: new URLSearchParams({
-                action: "verifyOtp",
+              body: JSON.stringify({
                 email,
-                otp,
+                token: otp,
+                type: "signup",
               }),
             });
 
+            // If signup verification fails, try magiclink verification
             if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
+              res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "apikey": SUPABASE_KEY,
+                },
+                body: JSON.stringify({
+                  email,
+                  token: otp,
+                  type: "magiclink",
+                }),
+              });
             }
 
-            const text = await res.text();
-            if (text === "OTP valid") {
-              otpVerified = true;
-              // Advance to step 2 (removed early presave to keep verification token for final submit)
-              try {
-                const payload = collectAllFields();
-                const PROGRESS_KEY = "empresarioRegProgress";
-                localStorage.setItem(PROGRESS_KEY, JSON.stringify({ step: 2, data: payload }));
-              } catch (_) { }
-              setTimeout(() => {
-                nextBtn.innerHTML = "Verified ✓";
-                nextBtn.style.backgroundColor = "#34a853";
-                nextBtn.disabled = true;
-                nextBtn.style.boxShadow = "none";
-                nextBtn.style.color = "#fff";
-                nextBtn.style.transform = "none";
-              }, 300);
-            } else {
-              otpError.style.display = "block";
-              alert(text);
-              nextBtn.innerHTML = "Verify OTP";
-              nextBtn.disabled = false;
+            if (!res.ok) {
+              const errData = await res.json().catch(() => ({}));
+              throw new Error(errData.msg || errData.message || "Invalid or expired OTP");
             }
+
+            // OTP Verified successfully
+            otpVerified = true;
+
+            // Save progress
+            try {
+              const payload = collectAllFields();
+              const PROGRESS_KEY = "empresarioRegProgress";
+              localStorage.setItem(PROGRESS_KEY, JSON.stringify({ step: 2, data: payload }));
+            } catch (_) { }
+
+            // Update UI state
+            emailInput.disabled = true;
+            otpInput.disabled = true;
+            sendOtpBtn.disabled = true;
+
+            nextBtn.innerHTML = "Verified ✓";
+            nextBtn.style.backgroundColor = "#34a853";
+            nextBtn.disabled = true;
+            nextBtn.style.boxShadow = "none";
+            nextBtn.style.color = "#fff";
+            nextBtn.style.transform = "none";
+
+            alert("Email verified successfully! You can now complete the remaining registration fields.");
           } catch (e) {
+            console.error("Verification Error:", e);
+            otpError.style.display = "block";
             alert("Error verifying OTP: " + e.message + ". Please try again.");
             nextBtn.innerHTML = "Verify OTP";
             nextBtn.disabled = false;
@@ -895,9 +940,36 @@
             if (step4Areas[5]) step4Areas[5].value = data.extra || "";
             // Advance to saved step if > 1
             const savedStep = parseInt(saved?.step, 10);
-            if (!isNaN(savedStep) && savedStep >= 2 && savedStep <= 4) {
-              nextStep(savedStep);
-              if (savedStep >= 2) otpVerified = true;
+            if (!isNaN(savedStep) && savedStep >= 2) {
+              otpVerified = true;
+              // Lock email input and verification button
+              const emailEl = document.getElementById("email");
+              if (emailEl) {
+                emailEl.disabled = true;
+              }
+              const sendBtn = document.getElementById("sendOtpBtn");
+              if (sendBtn) {
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = "OTP Sent!";
+              }
+              const otpEl = document.getElementById("otp");
+              if (otpEl) {
+                otpEl.disabled = true;
+                otpEl.value = "******";
+              }
+              const otpSectionEl = document.getElementById("otp-section");
+              if (otpSectionEl) {
+                otpSectionEl.classList.remove("hidden");
+              }
+              const verifyBtn = document.getElementById("nextBtn");
+              if (verifyBtn) {
+                verifyBtn.disabled = true;
+                verifyBtn.innerHTML = "Verified ✓";
+                verifyBtn.style.backgroundColor = "#34a853";
+                verifyBtn.style.color = "#fff";
+                verifyBtn.style.boxShadow = "none";
+                verifyBtn.style.transform = "none";
+              }
             }
           } catch (e) {
             console.warn("Load progress failed:", e);
