@@ -459,11 +459,11 @@
 
             </div>
             <button type="button" class="next-btn" id="nextBtn" disabled>
-              Next
+              Verify OTP
             </button>
           </div>
           <!-- Step 2: Personal Information -->
-          <div id="step-2" class="form-step" style="display: none">
+          <div id="step-2" class="form-step">
             <div class="form-section">
               <div class="section-title">Founder & Team Details</div>
               <label>Full Name (Team Leader) <span class="required">*</span></label>
@@ -477,12 +477,10 @@
               <label>City <span class="required">*</span></label>
               <input type="text" required />
             </div>
-            <button type="button" class="next-btn" onclick="handleStep2Next()">
-              Next
-            </button>
+            <!-- next button removed for single page layout -->
           </div>
           <!-- Step 3: Startup Information -->
-          <div id="step-3" class="form-step" style="display: none">
+          <div id="step-3" class="form-step">
             <div class="form-section">
               <div class="section-title">Startup Details</div>
               <label>Startup Name <span class="required">*</span></label>
@@ -532,12 +530,10 @@
               <label>Where did you hear about Empresario? <span class="required">*</span></label>
               <input type="text" required />
             </div>
-            <button type="button" class="next-btn" onclick="handleStep3Next()">
-              Next
-            </button>
+            <!-- next button removed for single page layout -->
           </div>
           <!-- Step 4: Business Overview -->
-          <div id="step-4" class="form-step" style="display: none">
+          <div id="step-4" class="form-step">
             <div class="form-section">
               <div class="section-title">Business Overview</div>
               <label>What problem are you solving? <span class="required">*</span></label>
@@ -586,47 +582,7 @@
         createParticles();
 
         function nextStep(step) {
-          let currentStep = null;
-          for (let i = 1; i <= 4; i++) {
-            const stepElement = document.getElementById("step-" + i);
-            if (stepElement.style.display !== "none") {
-              currentStep = i;
-              break;
-            }
-          }
-
-          if (currentStep && currentStep !== step) {
-            const currentStepElement = document.getElementById("step-" + currentStep);
-            currentStepElement.classList.add("fade-out");
-            setTimeout(() => {
-              for (let i = 1; i <= 4; i++) {
-                const stepElement = document.getElementById("step-" + i);
-                stepElement.style.display = "none";
-                stepElement.classList.remove("fade-out", "fade-in");
-              }
-              const targetStepElement = document.getElementById("step-" + step);
-              targetStepElement.style.display = "";
-              targetStepElement.classList.add("fade-in");
-              for (let i = 1; i <= 4; i++) {
-                setTimeout(() => {
-                  document
-                    .getElementById("step-" + i + "-indicator")
-                    .classList.toggle("active", i === step);
-                }, i * 50);
-              }
-              setTimeout(() => {
-                targetStepElement.classList.remove("fade-in");
-              }, 600);
-            }, 250);
-          } else {
-            for (let i = 1; i <= 4; i++) {
-              document.getElementById("step-" + i).style.display =
-                i === step ? "" : "none";
-              document
-                .getElementById("step-" + i + "-indicator")
-                .classList.toggle("active", i === step);
-            }
-          }
+          // Flattened form mode: no-op since all steps are visible
         }
 
         const formEl = document.getElementById("regForm");
@@ -823,19 +779,22 @@
                 localStorage.setItem(PROGRESS_KEY, JSON.stringify({ step: 2, data: payload }));
               } catch (_) { }
               setTimeout(() => {
-                nextStep(2);
-                nextBtn.innerHTML = "Next";
-                nextBtn.disabled = false;
+                nextBtn.innerHTML = "Verified ✓";
+                nextBtn.style.backgroundColor = "#34a853";
+                nextBtn.disabled = true;
+                nextBtn.style.boxShadow = "none";
+                nextBtn.style.color = "#fff";
+                nextBtn.style.transform = "none";
               }, 300);
             } else {
               otpError.style.display = "block";
               alert(text);
-              nextBtn.innerHTML = "Next";
+              nextBtn.innerHTML = "Verify OTP";
               nextBtn.disabled = false;
             }
           } catch (e) {
             alert("Error verifying OTP: " + e.message + ". Please try again.");
-            nextBtn.innerHTML = "Next";
+            nextBtn.innerHTML = "Verify OTP";
             nextBtn.disabled = false;
           }
         };
