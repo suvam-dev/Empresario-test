@@ -617,7 +617,30 @@
         }
 
         const formEl = document.getElementById("regForm");
-        async function saveToSupabase(data) {
+        async function saveToSupabase(payload) {
+          const data = {
+            email: payload.email,
+            full_name: payload.fullName || "",
+            personal_email: payload.personalEmail || "",
+            phone: payload.phone || "",
+            organization: payload.organization || "",
+            city: payload.city || "",
+            startup_name: payload.startupName || "",
+            website: payload.website || "",
+            industry: payload.industry || "",
+            social_impact: payload.socialImpact || "",
+            iitkgp_affiliation: payload.iitkgpAffiliation || "",
+            ai_ml_core: payload.aiMlCore || "",
+            tis: payload.tis || "",
+            problem: payload.problem || "",
+            solution: payload.solution || "",
+            market: payload.market || "",
+            traction: payload.traction || "",
+            revenue: payload.revenue || "",
+            extra: payload.extra || "",
+            submitted_at: payload.submittedAt || new Date().toISOString()
+          };
+
           const res = await fetch(`${SUPABASE_URL}/rest/v1/empresario_registrations`, {
             method: "POST",
             headers: {
