@@ -1,802 +1,1109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Empresario Registration Form</title>
-      <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { padding: 0; margin: 0; }
-    body { font-family: 'Inter', sans-serif; background-color: #fff; color: #111; overflow-x: hidden; margin: 0;}
-    .split-container { display: flex; min-height: 100vh; width: 100%; margin: 0; padding: 0; }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empresario Registration Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+      color: #111;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    .split-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
     /* LEFT SIDE - DARK SPLASH */
     .split-left {
       width: 50%;
       background: linear-gradient(rgba(10, 10, 15, 0.85), rgba(10, 10, 15, 0.95)), url('images/event-images/images (4).jpeg') center/cover;
       padding: 4rem 5rem;
-      display: flex; flex-direction: column; color: #fff; position: fixed; height: 100vh; top: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      position: fixed;
+      height: 100vh;
+      top: 0;
+      left: 0;
     }
-    .back-btn { color: #999; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; transition: color 0.3s; }
-    .back-btn:hover { color: #fff; }
-    .left-tagline { color: #1a73e8; font-weight: 700; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase; margin-top: 4rem; }
-    .left-heading { font-family: 'Playfair Display', serif; font-size: 4.2rem; font-weight: 700; line-height: 1.1; margin: 2rem 0; letter-spacing: -1px; }
-    .left-heading span { color: #1a73e8; }
-    .left-desc { font-size: 1rem; line-height: 1.6; color: #b0b0b8; margin-bottom: 2rem; max-width: 480px; }
+
+    .back-btn {
+      color: #999;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: auto;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+    }
+
+    .left-tagline {
+      color: #1a73e8;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-top: 4rem;
+    }
+
+    .left-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 2rem 0;
+      letter-spacing: -1px;
+    }
+
+    .left-heading span {
+      color: #1a73e8;
+    }
+
+    .left-desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #b0b0b8;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
 
     /* RIGHT SIDE - FORM */
     .split-right {
-      width: 50%; margin-left: 50%; padding: 4rem 5rem; background-color: #fff; min-height: 100vh;
+      width: 50%;
+      margin-left: 50%;
+      padding: 4rem 5rem;
+      background-color: #fff;
+      min-height: 100vh;
     }
-    .container { max-width: 100%; box-shadow: none; border: none; background: #fff; padding: 0; }
-    .right-tagline { color: #1a73e8; font-weight: 700; letter-spacing: 2px; font-size: 0.75rem; margin-bottom: 2.5rem; text-transform: uppercase; display: block; }
-    .section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; color: #111; letter-spacing: -0.5px; margin-top: 0; border: none; text-shadow: none; padding-bottom: 0; }
 
-    .stepper { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; position: relative; border-bottom: 1px solid #f0f0f0; margin-bottom: 2.5rem; padding-bottom: 1rem; }
-    .step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
-    
-    .step-circle { display: none !important; }
-    .step:not(:last-child)::after { display: none !important; }
-    
-    .step-title { font-size: 0.8rem; font-weight: 700; color: #b0b0b8; margin-top: 0; padding: 10px 0; text-align: center; text-transform: uppercase; letter-spacing: 1px; transition: color 0.25s;}
-    .step.active .step-title { color: #1a73e8; }
-
-    .form-step label { display: block; font-size: 0.75rem; font-weight: 600; color: #888; letter-spacing: 1px; margin-bottom: 0.4rem; text-transform: uppercase; margin-top: 1.8rem; }
-    .required { color: #d93025; font-weight: 700; animation: none; margin-left: 2px;}
-    
-    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], select, textarea {
-      width: 100%; background: transparent; border: none; border-bottom: 1px solid #e1e1e1; color: #111 !important; font-size: 1rem; padding: 10px 0; outline: none !important; border-radius: 0; transition: border 0.3s; font-family: inherit; margin-bottom: 0.5rem; box-shadow: none; text-shadow: none;
+    .container {
+      max-width: 100%;
+      box-shadow: none;
+      border: none;
+      background: #fff;
+      padding: 0;
     }
-    input::placeholder, textarea::placeholder { color: #ccc !important; font-style: normal !important; text-shadow: none; }
-    input:focus, select:focus, textarea:focus { border-bottom: 2px solid #1a73e8; box-shadow: none !important; background: transparent; border-color: #1a73e8 !important; }
-    select { cursor: pointer; color: #111; }
-    textarea { resize: vertical; margin-top: 5px; font-family: inherit; }
 
-    .email-row { display: flex; gap: 15px; align-items: flex-end; margin-bottom: 16px;}
-    .email-row input { flex: 1; margin-bottom: 0; background: transparent; }
-    .email-row .otp-btn { margin-top: 0 !important; width: 140px; padding: 0 !important; height: 46px; margin-bottom: 0;}
-
-    /* Button Geometry (Flat and Square) */
-    .next-btn, .submit-btn, .button, .otp-btn {
-      background: #1a73e8 !important; color: #fff !important; border: none; text-transform: uppercase; font-size: 0.85rem !important; padding: 14px 28px !important; letter-spacing: 1px; flex-shrink: 0; margin-top: 2rem !important; cursor: pointer; display: inline-block; transition: background-color 0.3s; border-radius: 4px !important; box-shadow: none !important; outline: none; outline-offset: 0; transform: none;
+    .right-tagline {
+      color: #1a73e8;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 0.75rem;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+      display: block;
     }
-    .next-btn:hover, .submit-btn:hover, .otp-btn:hover, .button:hover { background: #1557b0 !important; transform: none; box-shadow: none; border-color: transparent;}
-    
-    .next-btn:disabled, .otp-btn:disabled, .button:disabled {
-      background-color: #d0d0d0 !important; color: #fff !important; cursor: not-allowed !important; opacity: 1 !important; box-shadow: none; border-color: transparent; border: none; transform: none;}
-    
-    .hidden { display: none !important; }
-    .error-message { font-size: 0.8rem; color: #d93025; margin-top: 8px; display: none; }
-    .tokens.success, .success-message { color: #28a745; font-size: 1rem; font-weight: 600; margin-top: 20px; background: transparent; border: none; box-shadow: none; animation: none;}
 
-    .particles, .reg-banner, .social-sidebar { display: none !important; }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #111;
+      letter-spacing: -0.5px;
+      margin-top: 0;
+      border: none;
+      text-shadow: none;
+      padding-bottom: 0;
+    }
+
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      position: relative;
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .step-circle {
+      display: none !important;
+    }
+
+    .step:not(:last-child)::after {
+      display: none !important;
+    }
+
+    .step-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #b0b0b8;
+      margin-top: 0;
+      padding: 10px 0;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.25s;
+    }
+
+    .step.active .step-title {
+      color: #1a73e8;
+    }
+
+    .form-step label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #5f6368;
+      letter-spacing: 1px;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      margin-top: 1.8rem;
+    }
+
+    .required {
+      color: #ea4335;
+      font-weight: 700;
+      animation: none;
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      background: #f8f9fa;
+      border: 1px solid #e8eaed;
+      color: #3c4043 !important;
+      font-size: 1rem;
+      padding: 14px 16px;
+      outline: none !important;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      margin-bottom: 0.5rem;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.01);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #9aa0a6 !important;
+      text-shadow: none;
+      font-weight: 400;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      background: #fff;
+      border-color: #1a73e8 !important;
+      box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1) !important;
+    }
+
+    select {
+      cursor: pointer;
+      color: #3c4043;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L13 1" stroke="%239aa0a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    textarea {
+      resize: vertical;
+      margin-top: 5px;
+      font-family: inherit;
+    }
+
+    .email-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .email-row input {
+      flex: 1;
+      margin-bottom: 0;
+      height: 50px;
+    }
+
+    .email-row .otp-btn {
+      margin-top: 0 !important;
+      padding: 0 24px !important;
+      height: 50px;
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+
+    /* Modern Smooth Buttons */
+    .next-btn,
+    .submit-btn,
+    .button,
+    .otp-btn {
+      background: #1a73e8 !important;
+      color: #fff !important;
+      border: none;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.85rem !important;
+      padding: 14px 32px !important;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+      margin-top: 2.5rem !important;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border-radius: 8px !important;
+      box-shadow: 0 4px 6px rgba(26, 115, 232, 0.15), 0 1px 3px rgba(26, 115, 232, 0.1) !important;
+      outline: none;
+      transform: translateY(0);
+    }
+
+    .next-btn:hover,
+    .submit-btn:hover,
+    .otp-btn:hover,
+    .button:hover {
+      background: #1765cc !important;
+      box-shadow: 0 6px 12px rgba(26, 115, 232, 0.2), 0 2px 4px rgba(26, 115, 232, 0.15) !important;
+      border-color: transparent;
+    }
+
+    .next-btn:active,
+    .submit-btn:active,
+    .otp-btn:active,
+    .button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(26, 115, 232, 0.1) !important;
+    }
+
+    .next-btn:disabled,
+    .otp-btn:disabled,
+    .button:disabled {
+      background-color: #f1f3f4 !important;
+      color: #9aa0a6 !important;
+      cursor: not-allowed !important;
+      box-shadow: none !important;
+      border-color: transparent;
+      border: none;
+      transform: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .error-message {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #ea4335;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .tokens.success,
+    .success-message {
+      color: #34a853;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 20px;
+      background: #e6f4ea;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #ceead6;
+      box-shadow: none;
+      animation: none;
+    }
+
+    .particles,
+    .reg-banner,
+    .social-sidebar {
+      display: none !important;
+    }
 
     @media (max-width: 992px) {
-      .split-container { flex-direction: column; }
-      .split-left, .split-right { width: 100%; position: relative; height: auto; min-height: 50vh; margin: 0; padding: 3rem 2rem; }
-      .left-heading { font-size: 2.8rem; }
-      .email-row { flex-direction: column; align-items: flex-start; }
-      .email-row .otp-btn { margin-top: 1rem !important; width: 100%; }
-      .next-btn { min-width: 100%; }
+      .split-container {
+        flex-direction: column;
+      }
+
+      .split-left,
+      .split-right {
+        width: 100%;
+        position: relative;
+        height: auto;
+        min-height: 50vh;
+        margin: 0;
+        padding: 3rem 2rem;
+      }
+
+      .left-heading {
+        font-size: 2.8rem;
+      }
+
+      .email-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .email-row .otp-btn {
+        margin-top: 1rem !important;
+        width: 100%;
+      }
+
+      .next-btn {
+        min-width: 100%;
+      }
     }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">\n</head>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet">\n
+</head>
 
-  <body>
-    <div class="particles" id="particles"></div>
-    <div class="reg-banner">
-      <h1>Empresario Startup Registration 2026</h1>
-    </div>
-
-    
-<div class="split-container">
-  <!-- LEFT SIDE -->
-  <div class="split-left">
-    <a href="index.html" class="back-btn">&larr; BACK TO HOME</a>
-    <div class="left-tagline">/ EMPRESARIO STARTUP REGISTRATION</div>
-    <h1 class="left-heading">Register your<br><span style="color: #1a73e8;">perfect</span> startup<br>today.</h1>
-    <p class="left-desc">We craft the ultimate platform for founders to connect with investors, validate ideas, and raise real capital — built to launch your journey.</p>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="reg-banner">
+    <h1>Empresario Startup Registration 2026</h1>
   </div>
-  <!-- RIGHT SIDE -->
-  <div class="split-right">
-    <div class="right-tagline">/ REGISTRATION</div>
-<div class="container">
-      <div class="stepper">
-        <div class="step active" id="step-1-indicator">
-          <div class="step-circle">1</div>
-          <div class="step-title">STEP 1</div>
+
+
+  <div class="split-container">
+    <!-- LEFT SIDE -->
+    <div class="split-left">
+      <a href="index.html" class="back-btn">&larr; BACK TO HOME</a>
+      <div class="left-tagline">/ EMPRESARIO STARTUP REGISTRATION</div>
+      <h1 class="left-heading">Register your<br><span style="color: #1a73e8;">perfect</span> startup<br>today.</h1>
+      <p class="left-desc">We craft the ultimate platform for founders to connect with investors, validate ideas, and
+        raise real capital — built to launch your journey.</p>
+    </div>
+    <!-- RIGHT SIDE -->
+    <div class="split-right">
+      <div class="right-tagline">/ REGISTRATION</div>
+      <div class="container">
+        <div class="stepper">
+          <div class="step active" id="step-1-indicator">
+            <div class="step-circle">1</div>
+            <div class="step-title">STEP 1</div>
+          </div>
+          <div class="step" id="step-2-indicator">
+            <div class="step-circle">2</div>
+            <div class="step-title">STEP 2</div>
+          </div>
+          <div class="step" id="step-3-indicator">
+            <div class="step-circle">3</div>
+            <div class="step-title">STEP 3</div>
+          </div>
+          <div class="step" id="step-4-indicator">
+            <div class="step-circle">4</div>
+            <div class="step-title">STEP 4</div>
+          </div>
         </div>
-        <div class="step" id="step-2-indicator">
-          <div class="step-circle">2</div>
-          <div class="step-title">STEP 2</div>
-        </div>
-        <div class="step" id="step-3-indicator">
-          <div class="step-circle">3</div>
-          <div class="step-title">STEP 3</div>
-        </div>
-        <div class="step" id="step-4-indicator">
-          <div class="step-circle">4</div>
-          <div class="step-title">STEP 4</div>
-        </div>
-      </div>
-      <!-- Step 1: Email Verification -->
-      <form id="regForm" novalidate>
-        <div id="step-1" class="form-step">
-          <label>Email ID <span class="required">*</span></label>
-          <div class="email-row">
-            <input
-              type="email"
-              id="email"
-              required
-              placeholder="Enter your email"
-            />
-            <button type="button" class="otp-btn" id="sendOtpBtn">
-              Send OTP
+        <!-- Step 1: Email Verification -->
+        <form id="regForm" novalidate>
+          <div id="step-1" class="form-step">
+            <label>Email ID <span class="required">*</span></label>
+            <div class="email-row">
+              <input type="email" id="email" required placeholder="Enter your email" />
+              <button type="button" class="otp-btn" id="sendOtpBtn">
+                Send OTP
+              </button>
+            </div>
+            <div id="email-error" class="error-message">
+              Please enter a valid email address.
+            </div>
+            <div id="otp-section" class="hidden">
+              <label>Enter OTP <span class="required">*</span></label>
+              <input type="text" id="otp" maxlength="6" placeholder="Enter OTP" required />
+              <div id="otp-error" class="error-message">
+                Please enter the OTP sent to your email.
+              </div>
+
+            </div>
+            <button type="button" class="next-btn" id="nextBtn" disabled>
+              Next
             </button>
           </div>
-          <div id="email-error" class="error-message">
-            Please enter a valid email address.
-          </div>
-          <div id="otp-section" class="hidden">
-            <label>Enter OTP <span class="required">*</span></label>
-            <input type="text" id="otp" maxlength="6" placeholder="Enter OTP" required />
-            <div id="otp-error" class="error-message">
-              Please enter the OTP sent to your email.
+          <!-- Step 2: Personal Information -->
+          <div id="step-2" class="form-step" style="display: none">
+            <div class="form-section">
+              <div class="section-title">Founder & Team Details</div>
+              <label>Full Name (Team Leader) <span class="required">*</span></label>
+              <input type="text" required />
+              <label>Email Address <span class="required">*</span></label>
+              <input type="email" required />
+              <label>Phone Number <span class="required">*</span></label>
+              <input type="tel" required />
+              <label>College/Organization <span class="required">*</span></label>
+              <input type="text" required />
+              <label>City <span class="required">*</span></label>
+              <input type="text" required />
             </div>
-
+            <button type="button" class="next-btn" onclick="handleStep2Next()">
+              Next
+            </button>
           </div>
-          <button type="button" class="next-btn" id="nextBtn" disabled>
-            Next
-          </button>
-        </div>
-        <!-- Step 2: Personal Information -->
-        <div id="step-2" class="form-step" style="display: none">
-          <div class="form-section">
-            <div class="section-title">Founder & Team Details</div>
-            <label>Full Name (Team Leader) <span class="required">*</span></label>
-            <input type="text" required />
-            <label>Email Address <span class="required">*</span></label>
-            <input type="email" required />
-            <label>Phone Number <span class="required">*</span></label>
-            <input type="tel" required/>
-            <label>College/Organization <span class="required">*</span></label>
-            <input type="text" required />
-            <label>City <span class="required">*</span></label>
-            <input type="text" required />
+          <!-- Step 3: Startup Information -->
+          <div id="step-3" class="form-step" style="display: none">
+            <div class="form-section">
+              <div class="section-title">Startup Details</div>
+              <label>Startup Name <span class="required">*</span></label>
+              <input type="text" required />
+              <label>Website (if any)</label>
+              <input type="url" placeholder="https://www.example.com" />
+              <label>Industry/Domain <span class="required">*</span></label>
+              <select required>
+                <option value="" disabled selected>Select One</option>
+                <option>E-Commerce</option>
+                <option>Enterprisetech</option>
+                <option>Fintech</option>
+                <option>Deeptech</option>
+                <option>Cleantech</option>
+                <option>Healthtech</option>
+                <option>Agritech</option>
+                <option>AI and ML</option>
+                <option>Climate and Sustainability</option>
+                <option>Spacetech</option>
+                <option>Logistics</option>
+                <option>Edtech</option>
+                <option>Media and Entertainment</option>
+                <option>Consumer Services</option>
+                <option>Web3 and Blockchain</option>
+                <option>Others</option>
+              </select>
+              <label>Does your startup aim to solve a social or community
+                problem? <span class="required">*</span></label>
+              <select required>
+                <option value="" disabled selected>Select One</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+              <label>Is your team founded by IIT Kharagpur students, alumni, or
+                faculty? <span class="required">*</span></label>
+              <select required>
+                <option value="" disabled selected>Select One</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+              <label>Is AI/ML a core part of your product or tech stack? <span class="required">*</span></label>
+              <select required>
+                <option value="" disabled selected>Select One</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+              <label>Where did you hear about Empresario? <span class="required">*</span></label>
+              <input type="text" required />
+            </div>
+            <button type="button" class="next-btn" onclick="handleStep3Next()">
+              Next
+            </button>
           </div>
-          <button type="button" class="next-btn" onclick="handleStep2Next()">
-            Next
-          </button>
-        </div>
-        <!-- Step 3: Startup Information -->
-        <div id="step-3" class="form-step" style="display: none">
-          <div class="form-section">
-            <div class="section-title">Startup Details</div>
-            <label>Startup Name <span class="required">*</span></label>
-            <input type="text" required/>
-            <label>Website (if any)</label>
-            <input type="url" placeholder="https://www.example.com" />
-            <label>Industry/Domain <span class="required">*</span></label>
-            <select required>
-              <option value="" disabled selected>Select One</option>
-              <option>E-Commerce</option>
-              <option>Enterprisetech</option>
-              <option>Fintech</option>
-              <option>Deeptech</option>
-              <option>Cleantech</option>
-              <option>Healthtech</option>
-              <option>Agritech</option>
-              <option>AI and ML</option>
-              <option>Climate and Sustainability</option>
-              <option>Spacetech</option>
-              <option>Logistics</option>
-              <option>Edtech</option>
-              <option>Media and Entertainment</option>
-              <option>Consumer Services</option>
-              <option>Web3 and Blockchain</option>
-              <option>Others</option>
-            </select>
-            <label
-              >Does your startup aim to solve a social or community
-              problem? <span class="required">*</span></label
-            >
-            <select required>
-              <option value="" disabled selected>Select One</option>
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-            <label
-              >Is your team founded by IIT Kharagpur students, alumni, or
-              faculty? <span class="required">*</span></label
-            >
-            <select required>
-              <option value="" disabled selected>Select One</option>
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-            <label>Is AI/ML a core part of your product or tech stack? <span class="required">*</span></label>
-            <select required>
-              <option value="" disabled selected>Select One</option>
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-            <label>Where did you hear about Empresario? <span class="required">*</span></label>
-            <input type="text" required/>
+          <!-- Step 4: Business Overview -->
+          <div id="step-4" class="form-step" style="display: none">
+            <div class="form-section">
+              <div class="section-title">Business Overview</div>
+              <label>What problem are you solving? <span class="required">*</span></label>
+              <textarea rows="3" required></textarea>
+              <label>What is your proposed solution? <span class="required">*</span></label>
+              <textarea rows="3" required></textarea>
+              <label>Target market and estimated size <span class="required">*</span></label>
+              <textarea rows="3" required></textarea>
+              <label>Traction so far (if any) <span class="required">*</span></label>
+              <textarea rows="3" required></textarea>
+              <label>Revenue model <span class="required">*</span></label>
+              <textarea rows="3" required></textarea>
+              <label>Anything else you'd like to share? (Optional)</label>
+              <textarea rows="3"></textarea>
+            </div>
+            <button id="submitBtn" class="button" type="submit">Submit</button>
+            <div id="success-message" class="success-message">
+              🎉 Congratulations! You are successfully registered for Empresario Startup Registration 2026! 🎉
+            </div>
           </div>
-          <button type="button" class="next-btn" onclick="handleStep3Next()">
-            Next
-          </button>
-        </div>
-        <!-- Step 4: Business Overview -->
-        <div id="step-4" class="form-step" style="display: none">
-          <div class="form-section">
-            <div class="section-title">Business Overview</div>
-            <label>What problem are you solving? <span class="required">*</span></label>
-            <textarea rows="3" required></textarea>
-            <label>What is your proposed solution? <span class="required">*</span></label>
-            <textarea rows="3" required></textarea>
-            <label>Target market and estimated size <span class="required">*</span></label>
-            <textarea rows="3" required></textarea>
-            <label>Traction so far (if any) <span class="required">*</span></label>
-            <textarea rows="3" required></textarea>
-            <label>Revenue model <span class="required">*</span></label>
-            <textarea rows="3" required></textarea>
-            <label>Anything else you'd like to share? (Optional)</label>
-            <textarea rows="3"></textarea>
-          </div>
-          <button id="submitBtn" class="button" type="submit">Submit</button>
-          <div id="success-message" class="success-message">
-            🎉 Congratulations! You are successfully registered for Empresario Startup Registration 2026! 🎉
-          </div>
-        </div>
-      </form>
-    </div>
-    <script>
-      const scriptURL =
-        "https://script.google.com/macros/s/AKfycbydeSUhxPmlH-OLsZW1yBUszPndmJ1UgNXEQhR0s-Q0uh5iRqseh-dTyIS8os5MkAkcbQ/exec";
+        </form>
+      </div>
+      <script>
+        const scriptURL =
+          "https://script.google.com/macros/s/AKfycbydeSUhxPmlH-OLsZW1yBUszPndmJ1UgNXEQhR0s-Q0uh5iRqseh-dTyIS8os5MkAkcbQ/exec";
 
-      function createParticles() {
-        const particlesContainer = document.getElementById("particles");
-        const particleCount = 50;
+        function createParticles() {
+          const particlesContainer = document.getElementById("particles");
+          const particleCount = 50;
 
-        for (let i = 0; i < particleCount; i++) {
-          const particle = document.createElement("div");
-          particle.className = "particle";
+          for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement("div");
+            particle.className = "particle";
 
-          const size = Math.random() * 4 + 2;
-          particle.style.width = size + "px";
-          particle.style.height = size + "px";
-          particle.style.left = Math.random() * 100 + "%";
-          particle.style.top = Math.random() * 100 + "%";
-          particle.style.animationDelay = Math.random() * 6 + "s";
-          particle.style.animationDuration = Math.random() * 3 + 3 + "s";
-          particlesContainer.appendChild(particle);
-        }
-      }
-
-      createParticles();
-
-      function nextStep(step) {
-        let currentStep = null;
-        for (let i = 1; i <= 4; i++) {
-          const stepElement = document.getElementById("step-" + i);
-          if (stepElement.style.display !== "none") {
-            currentStep = i;
-            break;
+            const size = Math.random() * 4 + 2;
+            particle.style.width = size + "px";
+            particle.style.height = size + "px";
+            particle.style.left = Math.random() * 100 + "%";
+            particle.style.top = Math.random() * 100 + "%";
+            particle.style.animationDelay = Math.random() * 6 + "s";
+            particle.style.animationDuration = Math.random() * 3 + 3 + "s";
+            particlesContainer.appendChild(particle);
           }
         }
 
-        if (currentStep && currentStep !== step) {
-          const currentStepElement = document.getElementById("step-" + currentStep);
-          currentStepElement.classList.add("fade-out");
-          setTimeout(() => {
-            for (let i = 1; i <= 4; i++) {
-              const stepElement = document.getElementById("step-" + i);
-              stepElement.style.display = "none";
-              stepElement.classList.remove("fade-out", "fade-in");
-            }
-            const targetStepElement = document.getElementById("step-" + step);
-            targetStepElement.style.display = "";
-            targetStepElement.classList.add("fade-in");
-            for (let i = 1; i <= 4; i++) {
-              setTimeout(() => {
-                document
-                  .getElementById("step-" + i + "-indicator")
-                  .classList.toggle("active", i === step);
-        }, i * 50);
-            }
-            setTimeout(() => {
-              targetStepElement.classList.remove("fade-in");
-            }, 600);
-      }, 250);
-        } else {
+        createParticles();
+
+        function nextStep(step) {
+          let currentStep = null;
           for (let i = 1; i <= 4; i++) {
-            document.getElementById("step-" + i).style.display =
-              i === step ? "" : "none";
-            document
-              .getElementById("step-" + i + "-indicator")
-              .classList.toggle("active", i === step);
+            const stepElement = document.getElementById("step-" + i);
+            if (stepElement.style.display !== "none") {
+              currentStep = i;
+              break;
+            }
           }
-        }
-      }
 
-      const formEl = document.getElementById("regForm");
-      formEl.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const submitBtn = document.getElementById("submitBtn");
-        const successMessage = document.getElementById("success-message");
-        submitBtn.disabled = true;
-        const originalBtnText = submitBtn.innerHTML;
-        submitBtn.innerHTML = "Submitting...";
-
-        if (!validateBeforeSubmit()) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalBtnText;
-          return;
-        }
-
-        const payload = collectAllFields();
-        payload.submittedAt = new Date().toISOString();
-
-        try {
-          const res = await fetch(scriptURL, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams({ action: "register", ...payload }),
-          });
-          
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          
-          const text = await res.text();
-          console.log("Register response:", text);
-          if (text.trim().toLowerCase() === "ok") {
-            submitBtn.style.display = "none";
-            successMessage.style.display = "block";
-            successMessage.scrollIntoView({ behavior: "smooth" });
+          if (currentStep && currentStep !== step) {
+            const currentStepElement = document.getElementById("step-" + currentStep);
+            currentStepElement.classList.add("fade-out");
+            setTimeout(() => {
+              for (let i = 1; i <= 4; i++) {
+                const stepElement = document.getElementById("step-" + i);
+                stepElement.style.display = "none";
+                stepElement.classList.remove("fade-out", "fade-in");
+              }
+              const targetStepElement = document.getElementById("step-" + step);
+              targetStepElement.style.display = "";
+              targetStepElement.classList.add("fade-in");
+              for (let i = 1; i <= 4; i++) {
+                setTimeout(() => {
+                  document
+                    .getElementById("step-" + i + "-indicator")
+                    .classList.toggle("active", i === step);
+                }, i * 50);
+              }
+              setTimeout(() => {
+                targetStepElement.classList.remove("fade-in");
+              }, 600);
+            }, 250);
           } else {
-            alert("Submission failed: " + text);
+            for (let i = 1; i <= 4; i++) {
+              document.getElementById("step-" + i).style.display =
+                i === step ? "" : "none";
+              document
+                .getElementById("step-" + i + "-indicator")
+                .classList.toggle("active", i === step);
+            }
+          }
+        }
+
+        const formEl = document.getElementById("regForm");
+        formEl.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const submitBtn = document.getElementById("submitBtn");
+          const successMessage = document.getElementById("success-message");
+          submitBtn.disabled = true;
+          const originalBtnText = submitBtn.innerHTML;
+          submitBtn.innerHTML = "Submitting...";
+
+          if (!validateBeforeSubmit()) {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnText;
+            return;
           }
-        } catch (err) {
-          console.error("Backend submission error:", err);
-          // Fallback via no-cors to avoid CORS edge failures (server must accept)
+
+          const payload = collectAllFields();
+          payload.submittedAt = new Date().toISOString();
+
           try {
-            const fallbackRes = await fetch(scriptURL, {
+            const res = await fetch(scriptURL, {
               method: "POST",
-              mode: "no-cors",
+              mode: "cors",
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
               },
               body: new URLSearchParams({ action: "register", ...payload }),
             });
-            // With no-cors we can't read body; assume success if no exception
-            submitBtn.style.display = "none";
-            successMessage.style.display = "block";
-            successMessage.scrollIntoView({ behavior: "smooth" });
-          } catch (fallbackErr) {
-            alert("Network / server error: " + fallbackErr.message + ". Please try again.");
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
-          }
-        }
-      });
 
-      document.addEventListener("mousemove", function (e) {
-        const particles = document.querySelectorAll(".particle");
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
 
-        particles.forEach((particle, index) => {
-          const speed = ((index % 3) + 1) * 0.5;
-          const x = (mouseX - 0.5) * speed;
-          const y = (mouseY - 0.5) * speed;
-
-          particle.style.transform += ` translate(${x}px, ${y}px)`;
-        });
-      });
-
-      const emailInput = document.getElementById("email");
-      const sendOtpBtn = document.getElementById("sendOtpBtn");
-      const otpSection = document.getElementById("otp-section");
-      const nextBtn = document.getElementById("nextBtn");
-      const otpInput = document.getElementById("otp");
-      const emailError = document.getElementById("email-error");
-      const otpError = document.getElementById("otp-error");
-
-      let otpSent = false;
-      let otpVerified = false;
-      let mockOtp = "";
-
-      function validateEmail(email) {
-        return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
-      }
-
-      sendOtpBtn.onclick = async function () {
-        const email = emailInput.value.trim();
-        if (!validateEmail(email)) {
-          emailError.style.display = "block";
-          return;
-        } else {
-          emailError.style.display = "none";
-        }
-
-        try {
-          const res = await fetch(scriptURL, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams({
-              action: "sendOtp",
-              email,
-            }),
-          });
-          
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          
-          const text = await res.text();
-          console.log("OTP Response:", text);
-          if (text === "OTP sent") {
-            otpSection.classList.remove("hidden");
-            otpSent = true;
-            alert("Here is your OTP for Early Birds access to Empresario (valid for 5 minutes).");
-          } else {
-            alert("Server response: " + text);
-          }
-        } catch (e) {
-          console.error("OTP Error:", e);
-          alert("Error sending OTP: " + e.message + ". Please try again.");
-        }
-        validateStep1();
-      };
-
-      function validateStep1() {
-        let valid = true;
-        if (!validateEmail(emailInput.value.trim()) || !otpSent) valid = false;
-        if (otpSection && !otpSection.classList.contains("hidden")) {
-          if (!/^[0-9]{6}$/.test(otpInput.value.trim())) {
-            otpError.style.display = "block";
-            valid = false;
-          } else {
-            otpError.style.display = "none";
-          }
-
-        }
-        nextBtn.disabled = !valid;
-      }
-
-      emailInput.addEventListener("input", validateStep1);
-      otpInput.addEventListener("input", validateStep1);
-
-      nextBtn.onclick = async function () {
-        if (nextBtn.disabled) return;
-
-        const email = emailInput.value.trim();
-        const otp = otpInput.value.trim();
-
-        nextBtn.disabled = true;
-        nextBtn.innerHTML = "Verifying...";
-
-        try {
-          const res = await fetch(scriptURL, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams({
-              action: "verifyOtp",
-              email,
-              otp,
-            }),
-          });
-          
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          
-          const text = await res.text();
-          if (text === "OTP valid") {
-            otpVerified = true;
-            // Advance to step 2 (removed early presave to keep verification token for final submit)
+            const text = await res.text();
+            console.log("Register response:", text);
+            if (text.trim().toLowerCase() === "ok") {
+              submitBtn.style.display = "none";
+              successMessage.style.display = "block";
+              successMessage.scrollIntoView({ behavior: "smooth" });
+            } else {
+              alert("Submission failed: " + text);
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalBtnText;
+            }
+          } catch (err) {
+            console.error("Backend submission error:", err);
+            // Fallback via no-cors to avoid CORS edge failures (server must accept)
             try {
-              const payload = collectAllFields();
-              const PROGRESS_KEY = "empresarioRegProgress";
-              localStorage.setItem(PROGRESS_KEY, JSON.stringify({ step: 2, data: payload }));
-            } catch (_) {}
-            setTimeout(() => {
-              nextStep(2);
+              const fallbackRes = await fetch(scriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: new URLSearchParams({ action: "register", ...payload }),
+              });
+              // With no-cors we can't read body; assume success if no exception
+              submitBtn.style.display = "none";
+              successMessage.style.display = "block";
+              successMessage.scrollIntoView({ behavior: "smooth" });
+            } catch (fallbackErr) {
+              alert("Network / server error: " + fallbackErr.message + ". Please try again.");
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalBtnText;
+            }
+          }
+        });
+
+        document.addEventListener("mousemove", function (e) {
+          const particles = document.querySelectorAll(".particle");
+          const mouseX = e.clientX / window.innerWidth;
+          const mouseY = e.clientY / window.innerHeight;
+
+          particles.forEach((particle, index) => {
+            const speed = ((index % 3) + 1) * 0.5;
+            const x = (mouseX - 0.5) * speed;
+            const y = (mouseY - 0.5) * speed;
+
+            particle.style.transform += ` translate(${x}px, ${y}px)`;
+          });
+        });
+
+        const emailInput = document.getElementById("email");
+        const sendOtpBtn = document.getElementById("sendOtpBtn");
+        const otpSection = document.getElementById("otp-section");
+        const nextBtn = document.getElementById("nextBtn");
+        const otpInput = document.getElementById("otp");
+        const emailError = document.getElementById("email-error");
+        const otpError = document.getElementById("otp-error");
+
+        let otpSent = false;
+        let otpVerified = false;
+        let mockOtp = "";
+
+        function validateEmail(email) {
+          return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+        }
+
+        sendOtpBtn.onclick = async function () {
+          const email = emailInput.value.trim();
+          if (!validateEmail(email)) {
+            emailError.style.display = "block";
+            return;
+          } else {
+            emailError.style.display = "none";
+          }
+
+          try {
+            const res = await fetch(scriptURL, {
+              method: "POST",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                action: "sendOtp",
+                email,
+              }),
+            });
+
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const text = await res.text();
+            console.log("OTP Response:", text);
+            if (text === "OTP sent") {
+              otpSection.classList.remove("hidden");
+              otpSent = true;
+              alert("Here is your OTP for Early Birds access to Empresario (valid for 5 minutes).");
+            } else {
+              alert("Server response: " + text);
+            }
+          } catch (e) {
+            console.error("OTP Error:", e);
+            alert("Error sending OTP: " + e.message + ". Please try again.");
+          }
+          validateStep1();
+        };
+
+        function validateStep1() {
+          let valid = true;
+          if (!validateEmail(emailInput.value.trim()) || !otpSent) valid = false;
+          if (otpSection && !otpSection.classList.contains("hidden")) {
+            if (!/^[0-9]{6}$/.test(otpInput.value.trim())) {
+              otpError.style.display = "block";
+              valid = false;
+            } else {
+              otpError.style.display = "none";
+            }
+
+          }
+          nextBtn.disabled = !valid;
+        }
+
+        emailInput.addEventListener("input", validateStep1);
+        otpInput.addEventListener("input", validateStep1);
+
+        nextBtn.onclick = async function () {
+          if (nextBtn.disabled) return;
+
+          const email = emailInput.value.trim();
+          const otp = otpInput.value.trim();
+
+          nextBtn.disabled = true;
+          nextBtn.innerHTML = "Verifying...";
+
+          try {
+            const res = await fetch(scriptURL, {
+              method: "POST",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                action: "verifyOtp",
+                email,
+                otp,
+              }),
+            });
+
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const text = await res.text();
+            if (text === "OTP valid") {
+              otpVerified = true;
+              // Advance to step 2 (removed early presave to keep verification token for final submit)
+              try {
+                const payload = collectAllFields();
+                const PROGRESS_KEY = "empresarioRegProgress";
+                localStorage.setItem(PROGRESS_KEY, JSON.stringify({ step: 2, data: payload }));
+              } catch (_) { }
+              setTimeout(() => {
+                nextStep(2);
+                nextBtn.innerHTML = "Next";
+                nextBtn.disabled = false;
+              }, 300);
+            } else {
+              otpError.style.display = "block";
+              alert(text);
               nextBtn.innerHTML = "Next";
               nextBtn.disabled = false;
-            }, 300);
-          } else {
-            otpError.style.display = "block";
-            alert(text);
+            }
+          } catch (e) {
+            alert("Error verifying OTP: " + e.message + ". Please try again.");
             nextBtn.innerHTML = "Next";
             nextBtn.disabled = false;
           }
-        } catch (e) {
-          alert("Error verifying OTP: " + e.message + ". Please try again.");
-          nextBtn.innerHTML = "Next";
-          nextBtn.disabled = false;
-        }
-      };
+        };
 
-      // Progress persistence helpers
-      const PROGRESS_KEY = "empresarioRegProgress";
-      function getCurrentStepNumber() {
-        for (let i = 1; i <= 4; i++) {
-          const el = document.getElementById("step-" + i);
-          if (el && el.style.display !== "none") return i;
-        }
-        return 1;
-      }
-
-      function saveProgress() {
-        try {
-          const data = collectAllFields();
-          const step = getCurrentStepNumber();
-          localStorage.setItem(PROGRESS_KEY, JSON.stringify({ step, data }));
-        } catch (e) {
-          console.warn("Save progress failed:", e);
-        }
-      }
-
-      function loadProgress() {
-        try {
-          const raw = localStorage.getItem(PROGRESS_KEY);
-          if (!raw) return;
-          const saved = JSON.parse(raw);
-          const data = saved?.data || {};
-          // Step 1
-          if (typeof data.email === "string") {
-            const emailEl = document.getElementById("email");
-            if (emailEl) emailEl.value = data.email;
+        // Progress persistence helpers
+        const PROGRESS_KEY = "empresarioRegProgress";
+        function getCurrentStepNumber() {
+          for (let i = 1; i <= 4; i++) {
+            const el = document.getElementById("step-" + i);
+            if (el && el.style.display !== "none") return i;
           }
-          // Step 2 inputs (order-based like collectAllFields)
+          return 1;
+        }
+
+        function saveProgress() {
+          try {
+            const data = collectAllFields();
+            const step = getCurrentStepNumber();
+            localStorage.setItem(PROGRESS_KEY, JSON.stringify({ step, data }));
+          } catch (e) {
+            console.warn("Save progress failed:", e);
+          }
+        }
+
+        function loadProgress() {
+          try {
+            const raw = localStorage.getItem(PROGRESS_KEY);
+            if (!raw) return;
+            const saved = JSON.parse(raw);
+            const data = saved?.data || {};
+            // Step 1
+            if (typeof data.email === "string") {
+              const emailEl = document.getElementById("email");
+              if (emailEl) emailEl.value = data.email;
+            }
+            // Step 2 inputs (order-based like collectAllFields)
+            const step2Inputs = document.querySelectorAll("#step-2 input");
+            if (step2Inputs[0]) step2Inputs[0].value = data.fullName || "";
+            if (step2Inputs[1]) step2Inputs[1].value = data.personalEmail || "";
+            if (step2Inputs[2]) step2Inputs[2].value = data.phone || "";
+            if (step2Inputs[3]) step2Inputs[3].value = data.organization || "";
+            if (step2Inputs[4]) step2Inputs[4].value = data.city || "";
+            // Step 3
+            const step3TextInputs = document.querySelectorAll("#step-3 input");
+            const step3Selects = document.querySelectorAll("#step-3 select");
+            if (step3TextInputs[0]) step3TextInputs[0].value = data.startupName || "";
+            if (step3TextInputs[1]) step3TextInputs[1].value = data.website || "";
+            if (step3Selects[0]) step3Selects[0].value = data.industry || "";
+            if (step3Selects[1]) step3Selects[1].value = data.socialImpact || "";
+            if (step3Selects[2]) step3Selects[2].value = data.iitkgpAffiliation || "";
+            if (step3Selects[3]) step3Selects[3].value = data.aiMlCore || "";
+            // TIS
+            const tisInput = document.querySelector('#step-3 input[type="text"]:last-of-type');
+            if (tisInput) tisInput.value = data.tis || "";
+            // Step 4 textareas
+            const step4Areas = document.querySelectorAll("#step-4 textarea");
+            if (step4Areas[0]) step4Areas[0].value = data.problem || "";
+            if (step4Areas[1]) step4Areas[1].value = data.solution || "";
+            if (step4Areas[2]) step4Areas[2].value = data.market || "";
+            if (step4Areas[3]) step4Areas[3].value = data.traction || "";
+            if (step4Areas[4]) step4Areas[4].value = data.revenue || "";
+            if (step4Areas[5]) step4Areas[5].value = data.extra || "";
+            // Advance to saved step if > 1
+            const savedStep = parseInt(saved?.step, 10);
+            if (!isNaN(savedStep) && savedStep >= 2 && savedStep <= 4) {
+              nextStep(savedStep);
+              if (savedStep >= 2) otpVerified = true;
+            }
+          } catch (e) {
+            console.warn("Load progress failed:", e);
+          }
+        }
+
+        // Auto-save on input changes
+        document
+          .querySelectorAll('#regForm input, #regForm select, #regForm textarea')
+          .forEach((el) => {
+            el.addEventListener('input', saveProgress);
+            el.addEventListener('change', saveProgress);
+          });
+
+        // Step-wise validation helpers
+        function getRequiredFieldsInStep(stepNum) {
+          return Array.from(
+            document.querySelectorAll(
+              `#step-${stepNum} input[required], #step-${stepNum} select[required], #step-${stepNum} textarea[required]`
+            )
+          );
+        }
+
+        function allRequiredFilledInStep(stepNum) {
+          const fields = getRequiredFieldsInStep(stepNum);
+          return fields.every((el) => el.checkValidity());
+        }
+
+        function goToFirstInvalidInStep(stepNum) {
+          const fields = getRequiredFieldsInStep(stepNum);
+          const firstInvalid = fields.find((el) => !el.checkValidity());
+          if (firstInvalid) {
+            nextStep(stepNum);
+            setTimeout(() => {
+              if (typeof firstInvalid.reportValidity === 'function') {
+                firstInvalid.reportValidity();
+              } else {
+                firstInvalid.focus();
+              }
+              firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+          }
+        }
+
+        function updateStep2NextState() {
+          const btn = document.querySelector('#step-2 .next-btn');
+          if (btn) btn.disabled = !allRequiredFilledInStep(2);
+        }
+        function updateStep3NextState() {
+          const btn = document.querySelector('#step-3 .next-btn');
+          if (btn) btn.disabled = !allRequiredFilledInStep(3);
+        }
+
+        // Attach dynamic enable/disable for Next buttons on Steps 2 and 3
+        getRequiredFieldsInStep(2).forEach((el) => {
+          el.addEventListener('input', updateStep2NextState);
+          el.addEventListener('change', updateStep2NextState);
+        });
+        getRequiredFieldsInStep(3).forEach((el) => {
+          el.addEventListener('input', updateStep3NextState);
+          el.addEventListener('change', updateStep3NextState);
+        });
+
+        // Be lenient with website input by auto-prefixing protocol
+        const websiteInput = document.querySelector('#step-3 input[type="url"]');
+        if (websiteInput) {
+          websiteInput.addEventListener('blur', () => {
+            const val = websiteInput.value.trim();
+            if (val && !/^https?:\/\//i.test(val)) {
+              websiteInput.value = 'https://' + val;
+            }
+            updateStep3NextState();
+          });
+        }
+
+        // Initialize button states
+        updateStep2NextState();
+        updateStep3NextState();
+
+        function handleStep2Next() {
+          const stepNum = 2;
+          const nextButton = document.querySelector('#step-2 .next-btn');
+          if (nextButton) nextButton.disabled = true;
+          if (!allRequiredFilledInStep(stepNum)) {
+            goToFirstInvalidInStep(stepNum);
+            if (nextButton) nextButton.disabled = false;
+            return;
+          }
+          saveProgress();
+          nextStep(3);
+          if (nextButton) nextButton.disabled = false;
+        }
+
+        function handleStep3Next() {
+          const stepNum = 3;
+          const nextButton = document.querySelector('#step-3 .next-btn');
+          if (nextButton) nextButton.disabled = true;
+          if (!allRequiredFilledInStep(stepNum)) {
+            goToFirstInvalidInStep(stepNum);
+            if (nextButton) nextButton.disabled = false;
+            return;
+          }
+          saveProgress();
+          nextStep(4);
+          if (nextButton) nextButton.disabled = false;
+        }
+
+        function validateBeforeSubmit() {
+          // Ensure OTP verified
+          if (!otpVerified) {
+            alert('Please verify your email via OTP before submitting.');
+            nextStep(1);
+            return false;
+          }
+          // Validate each step's required fields
+          if (!allRequiredFilledInStep(2)) {
+            goToFirstInvalidInStep(2);
+            return false;
+          }
+          if (!allRequiredFilledInStep(3)) {
+            goToFirstInvalidInStep(3);
+            return false;
+          }
+          if (!allRequiredFilledInStep(4)) {
+            goToFirstInvalidInStep(4);
+            return false;
+          }
+          return true;
+        }
+
+        function collectAllFields() {
+          const email = document.getElementById("email").value.trim();
+
+          // Step 2 (in order)
           const step2Inputs = document.querySelectorAll("#step-2 input");
-          if (step2Inputs[0]) step2Inputs[0].value = data.fullName || "";
-          if (step2Inputs[1]) step2Inputs[1].value = data.personalEmail || "";
-          if (step2Inputs[2]) step2Inputs[2].value = data.phone || "";
-          if (step2Inputs[3]) step2Inputs[3].value = data.organization || "";
-          if (step2Inputs[4]) step2Inputs[4].value = data.city || "";
-          // Step 3
+          const fullName = step2Inputs[0]?.value?.trim() || "";
+          const personalEmail = step2Inputs[1]?.value?.trim() || "";
+          const phone = step2Inputs[2]?.value?.trim() || "";
+          const organization = step2Inputs[3]?.value?.trim() || "";
+          const city = step2Inputs[4]?.value?.trim() || "";
+
+          // Step 3 (inputs + selects in order)
           const step3TextInputs = document.querySelectorAll("#step-3 input");
           const step3Selects = document.querySelectorAll("#step-3 select");
-          if (step3TextInputs[0]) step3TextInputs[0].value = data.startupName || "";
-          if (step3TextInputs[1]) step3TextInputs[1].value = data.website || "";
-          if (step3Selects[0]) step3Selects[0].value = data.industry || "";
-          if (step3Selects[1]) step3Selects[1].value = data.socialImpact || "";
-          if (step3Selects[2]) step3Selects[2].value = data.iitkgpAffiliation || "";
-          if (step3Selects[3]) step3Selects[3].value = data.aiMlCore || "";
-          // TIS
-          const tisInput = document.querySelector('#step-3 input[type="text"]:last-of-type');
-          if (tisInput) tisInput.value = data.tis || "";
-          // Step 4 textareas
+          const startupName = step3TextInputs[0]?.value?.trim() || "";
+          const website = step3TextInputs[1]?.value?.trim() || "";
+          const industry = step3Selects[0]?.value || "";
+          const socialImpact = step3Selects[1]?.value || "";
+          const iitkgpAffiliation = step3Selects[2]?.value || "";
+          const aiMlCore = step3Selects[3]?.value || "";
+          const tis =
+            document
+              .querySelector('#step-3 input[type="text"]:last-of-type')
+              ?.value?.trim() ||
+            step3TextInputs[2]?.value?.trim() ||
+            "";
+
+          // Step 4 (textareas in order)
           const step4Areas = document.querySelectorAll("#step-4 textarea");
-          if (step4Areas[0]) step4Areas[0].value = data.problem || "";
-          if (step4Areas[1]) step4Areas[1].value = data.solution || "";
-          if (step4Areas[2]) step4Areas[2].value = data.market || "";
-          if (step4Areas[3]) step4Areas[3].value = data.traction || "";
-          if (step4Areas[4]) step4Areas[4].value = data.revenue || "";
-          if (step4Areas[5]) step4Areas[5].value = data.extra || "";
-          // Advance to saved step if > 1
-          const savedStep = parseInt(saved?.step, 10);
-          if (!isNaN(savedStep) && savedStep >= 2 && savedStep <= 4) {
-            nextStep(savedStep);
-            if (savedStep >= 2) otpVerified = true;
-          }
-        } catch (e) {
-          console.warn("Load progress failed:", e);
+          const problem = step4Areas[0]?.value?.trim() || "";
+          const solution = step4Areas[1]?.value?.trim() || "";
+          const market = step4Areas[2]?.value?.trim() || "";
+          const traction = step4Areas[3]?.value?.trim() || "";
+          const revenue = step4Areas[4]?.value?.trim() || "";
+          const extra = step4Areas[5]?.value?.trim() || "";
+
+          return {
+            email,
+            fullName,
+            personalEmail,
+            phone,
+            organization,
+            city,
+            startupName,
+            website,
+            industry,
+            socialImpact,
+            iitkgpAffiliation,
+            aiMlCore,
+            tis,
+            problem,
+            solution,
+            market,
+            traction,
+            revenue,
+            extra,
+          };
         }
-      }
 
-      // Auto-save on input changes
-      document
-        .querySelectorAll('#regForm input, #regForm select, #regForm textarea')
-        .forEach((el) => {
-          el.addEventListener('input', saveProgress);
-          el.addEventListener('change', saveProgress);
-        });
+        // Attempt to restore progress on load
+        loadProgress();
+      </script>
 
-      // Step-wise validation helpers
-      function getRequiredFieldsInStep(stepNum) {
-        return Array.from(
-          document.querySelectorAll(
-            `#step-${stepNum} input[required], #step-${stepNum} select[required], #step-${stepNum} textarea[required]`
-          )
-        );
-      }
-
-      function allRequiredFilledInStep(stepNum) {
-        const fields = getRequiredFieldsInStep(stepNum);
-        return fields.every((el) => el.checkValidity());
-      }
-
-      function goToFirstInvalidInStep(stepNum) {
-        const fields = getRequiredFieldsInStep(stepNum);
-        const firstInvalid = fields.find((el) => !el.checkValidity());
-        if (firstInvalid) {
-          nextStep(stepNum);
-          setTimeout(() => {
-            if (typeof firstInvalid.reportValidity === 'function') {
-              firstInvalid.reportValidity();
-            } else {
-              firstInvalid.focus();
-            }
-            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 300);
-        }
-      }
-
-      function updateStep2NextState() {
-        const btn = document.querySelector('#step-2 .next-btn');
-        if (btn) btn.disabled = !allRequiredFilledInStep(2);
-      }
-      function updateStep3NextState() {
-        const btn = document.querySelector('#step-3 .next-btn');
-        if (btn) btn.disabled = !allRequiredFilledInStep(3);
-      }
-
-      // Attach dynamic enable/disable for Next buttons on Steps 2 and 3
-      getRequiredFieldsInStep(2).forEach((el) => {
-        el.addEventListener('input', updateStep2NextState);
-        el.addEventListener('change', updateStep2NextState);
-      });
-      getRequiredFieldsInStep(3).forEach((el) => {
-        el.addEventListener('input', updateStep3NextState);
-        el.addEventListener('change', updateStep3NextState);
-      });
-
-      // Be lenient with website input by auto-prefixing protocol
-      const websiteInput = document.querySelector('#step-3 input[type="url"]');
-      if (websiteInput) {
-        websiteInput.addEventListener('blur', () => {
-          const val = websiteInput.value.trim();
-          if (val && !/^https?:\/\//i.test(val)) {
-            websiteInput.value = 'https://' + val;
-          }
-          updateStep3NextState();
-        });
-      }
-
-      // Initialize button states
-      updateStep2NextState();
-      updateStep3NextState();
-
-      function handleStep2Next() {
-        const stepNum = 2;
-        const nextButton = document.querySelector('#step-2 .next-btn');
-        if (nextButton) nextButton.disabled = true;
-        if (!allRequiredFilledInStep(stepNum)) {
-          goToFirstInvalidInStep(stepNum);
-          if (nextButton) nextButton.disabled = false;
-          return;
-        }
-        saveProgress();
-        nextStep(3);
-        if (nextButton) nextButton.disabled = false;
-      }
-
-      function handleStep3Next() {
-        const stepNum = 3;
-        const nextButton = document.querySelector('#step-3 .next-btn');
-        if (nextButton) nextButton.disabled = true;
-        if (!allRequiredFilledInStep(stepNum)) {
-          goToFirstInvalidInStep(stepNum);
-          if (nextButton) nextButton.disabled = false;
-          return;
-        }
-        saveProgress();
-        nextStep(4);
-        if (nextButton) nextButton.disabled = false;
-      }
-
-      function validateBeforeSubmit() {
-        // Ensure OTP verified
-        if (!otpVerified) {
-          alert('Please verify your email via OTP before submitting.');
-          nextStep(1);
-          return false;
-        }
-        // Validate each step's required fields
-        if (!allRequiredFilledInStep(2)) {
-          goToFirstInvalidInStep(2);
-          return false;
-        }
-        if (!allRequiredFilledInStep(3)) {
-          goToFirstInvalidInStep(3);
-          return false;
-        }
-        if (!allRequiredFilledInStep(4)) {
-          goToFirstInvalidInStep(4);
-          return false;
-        }
-        return true;
-      }
-
-      function collectAllFields() {
-        const email = document.getElementById("email").value.trim();
-
-        // Step 2 (in order)
-        const step2Inputs = document.querySelectorAll("#step-2 input");
-        const fullName = step2Inputs[0]?.value?.trim() || "";
-        const personalEmail = step2Inputs[1]?.value?.trim() || "";
-        const phone = step2Inputs[2]?.value?.trim() || "";
-        const organization = step2Inputs[3]?.value?.trim() || "";
-        const city = step2Inputs[4]?.value?.trim() || "";
-
-        // Step 3 (inputs + selects in order)
-        const step3TextInputs = document.querySelectorAll("#step-3 input");
-        const step3Selects = document.querySelectorAll("#step-3 select");
-        const startupName = step3TextInputs[0]?.value?.trim() || "";
-        const website = step3TextInputs[1]?.value?.trim() || "";
-        const industry = step3Selects[0]?.value || "";
-        const socialImpact = step3Selects[1]?.value || "";
-        const iitkgpAffiliation = step3Selects[2]?.value || "";
-        const aiMlCore = step3Selects[3]?.value || "";
-        const tis =
-          document
-            .querySelector('#step-3 input[type="text"]:last-of-type')
-            ?.value?.trim() ||
-          step3TextInputs[2]?.value?.trim() ||
-          "";
-
-        // Step 4 (textareas in order)
-        const step4Areas = document.querySelectorAll("#step-4 textarea");
-        const problem = step4Areas[0]?.value?.trim() || "";
-        const solution = step4Areas[1]?.value?.trim() || "";
-        const market = step4Areas[2]?.value?.trim() || "";
-        const traction = step4Areas[3]?.value?.trim() || "";
-        const revenue = step4Areas[4]?.value?.trim() || "";
-        const extra = step4Areas[5]?.value?.trim() || "";
-
-        return {
-          email,
-          fullName,
-          personalEmail,
-          phone,
-          organization,
-          city,
-          startupName,
-          website,
-          industry,
-          socialImpact,
-          iitkgpAffiliation,
-          aiMlCore,
-          tis,
-          problem,
-          solution,
-          market,
-          traction,
-          revenue,
-          extra,
-        };
-      }
-
-      // Attempt to restore progress on load
-      loadProgress();
-    </script>
-  
-<!-- Social Sidebar -->
-<div class="social-sidebar">
-    <a href="https://www.instagram.com/iitkgp_ecell/" target="_blank" class="instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.linkedin.com/company/ecellkgp/" target="_blank" class="linkedin" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-    <a href="https://www.facebook.com/ecell.iitkgp/" target="_blank" class="facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-    <a href="https://x.com/ecelliitkgp" target="_blank" class="twitter" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-</div>
+      <!-- Social Sidebar -->
+      <div class="social-sidebar">
+        <a href="https://www.instagram.com/iitkgp_ecell/" target="_blank" class="instagram" title="Instagram"><i
+            class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/company/ecellkgp/" target="_blank" class="linkedin" title="LinkedIn"><i
+            class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://www.facebook.com/ecell.iitkgp/" target="_blank" class="facebook" title="Facebook"><i
+            class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://x.com/ecelliitkgp" target="_blank" class="twitter" title="X (Twitter)"><i
+            class="fa-brands fa-x-twitter"></i></a>
+      </div>
 
 
-  </div></div></body>
+    </div>
+  </div>
+</body>
+
 </html>
