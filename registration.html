@@ -333,6 +333,7 @@
       border: none;
       box-shadow: none;
       animation: none;
+      display: none;
     }
 
     .particles,
@@ -551,7 +552,8 @@
               <textarea rows="3"></textarea>
             </div>
             <button id="submitBtn" class="button" type="submit">Submit</button>
-            <div id="success-message" class="success-message">
+            <div id="success-message" class="success-message"
+              style="display: none; text-align: center; padding: 4rem 0;">
               🎉 Congratulations! You are successfully registered for Empresario Startup Registration 2026! 🎉
             </div>
           </div>
@@ -621,7 +623,9 @@
             const text = await res.text();
             console.log("Register response:", text);
             if (text.trim().toLowerCase() === "ok") {
-              submitBtn.style.display = "none";
+              const formEl = document.getElementById("regForm");
+              formEl.innerHTML = "";
+              formEl.appendChild(successMessage);
               successMessage.style.display = "block";
               successMessage.scrollIntoView({ behavior: "smooth" });
             } else {
@@ -642,7 +646,9 @@
                 body: new URLSearchParams({ action: "register", ...payload }),
               });
               // With no-cors we can't read body; assume success if no exception
-              submitBtn.style.display = "none";
+              const formEl = document.getElementById("regForm");
+              formEl.innerHTML = "";
+              formEl.appendChild(successMessage);
               successMessage.style.display = "block";
               successMessage.scrollIntoView({ behavior: "smooth" });
             } catch (fallbackErr) {
