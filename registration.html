@@ -37,25 +37,54 @@
     /* LEFT SIDE - DARK SPLASH */
     .split-left {
       width: 50%;
-      background: linear-gradient(rgba(10, 10, 15, 0.85), rgba(10, 10, 15, 0.95)), url('images/event-images/images (4).jpeg') center/cover;
       padding: 4rem 5rem;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       color: #fff;
       position: fixed;
       height: 100vh;
       top: 0;
       left: 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .split-left::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      background: url('images/event-images/images (4).jpeg') center/cover;
+      filter: blur(15px);
+      z-index: -2;
+    }
+
+    .split-left::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(28, 82, 216, 0.75), rgba(10, 10, 15, 0.9));
+      z-index: -1;
     }
 
     .back-btn {
       color: #999;
       text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      margin-bottom: auto;
-      text-transform: uppercase;
-      transition: color 0.3s;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+      position: absolute;
+      top: 3rem;
+      left: 3rem;
     }
 
     .back-btn:hover {
@@ -63,12 +92,12 @@
     }
 
     .left-tagline {
-      color: #1a73e8;
+      color: #4da3ff;
       font-weight: 700;
       letter-spacing: 2px;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
-      margin-top: 4rem;
+      margin-bottom: 0.5rem;
     }
 
     .left-heading {
@@ -85,9 +114,9 @@
     }
 
     .left-desc {
-      font-size: 1rem;
+      font-size: 1.05rem;
       line-height: 1.6;
-      color: #b0b0b8;
+      color: #d1d5db;
       margin-bottom: 2rem;
       max-width: 480px;
     }
