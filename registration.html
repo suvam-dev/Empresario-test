@@ -176,17 +176,17 @@
 
     .form-step label {
       display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #5f6368;
-      letter-spacing: 1px;
-      margin-bottom: 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 1.5px;
+      margin-bottom: 1rem;
       text-transform: uppercase;
-      margin-top: 1.8rem;
+      margin-top: 2.5rem;
     }
 
     .required {
-      color: #ea4335;
+      color: #888;
       font-weight: 700;
       animation: none;
       margin-left: 2px;
@@ -199,42 +199,40 @@
     select,
     textarea {
       width: 100%;
-      background: #f8f9fa;
-      border: 1px solid #e8eaed;
-      color: #3c4043 !important;
-      font-size: 1rem;
-      padding: 14px 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #e1e1e1;
+      color: #111 !important;
+      font-size: 1.1rem;
+      padding: 5px 0 15px 0;
       outline: none !important;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+      border-radius: 0;
+      transition: border 0.3s;
       font-family: inherit;
       margin-bottom: 0.5rem;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.01);
+      box-shadow: none;
+      text-shadow: none;
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: #9aa0a6 !important;
+      color: transparent !important;
+      font-style: normal !important;
       text-shadow: none;
-      font-weight: 400;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      background: #fff;
+      border-bottom: 2px solid #1a73e8;
+      box-shadow: none !important;
+      background: transparent;
       border-color: #1a73e8 !important;
-      box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1) !important;
     }
 
     select {
       cursor: pointer;
-      color: #3c4043;
-      appearance: none;
-      background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L13 1" stroke="%239aa0a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 40px;
+      color: #111;
     }
 
     textarea {
@@ -245,26 +243,28 @@
 
     .email-row {
       display: flex;
-      gap: 12px;
-      align-items: center;
+      gap: 15px;
+      align-items: flex-end;
       margin-bottom: 16px;
     }
 
     .email-row input {
       flex: 1;
       margin-bottom: 0;
-      height: 50px;
+      background: transparent;
+      padding-bottom: 15px;
     }
 
     .email-row .otp-btn {
       margin-top: 0 !important;
-      padding: 0 24px !important;
-      height: 50px;
+      width: 140px;
+      padding: 0 !important;
+      height: 46px;
       margin-bottom: 0;
-      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* Modern Smooth Buttons */
+    /* Button Geometry (Flat and Square) */
     .next-btn,
     .submit-btn,
     .button,
@@ -272,48 +272,40 @@
       background: #1a73e8 !important;
       color: #fff !important;
       border: none;
-      font-weight: 600;
       text-transform: uppercase;
       font-size: 0.85rem !important;
-      padding: 14px 32px !important;
-      letter-spacing: 0.5px;
+      padding: 14px 28px !important;
+      letter-spacing: 1px;
       flex-shrink: 0;
-      margin-top: 2.5rem !important;
+      margin-top: 2rem !important;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      border-radius: 8px !important;
-      box-shadow: 0 4px 6px rgba(26, 115, 232, 0.15), 0 1px 3px rgba(26, 115, 232, 0.1) !important;
+      display: inline-block;
+      transition: background-color 0.3s;
+      border-radius: 4px !important;
+      box-shadow: none !important;
       outline: none;
-      transform: translateY(0);
+      outline-offset: 0;
+      transform: none;
     }
 
     .next-btn:hover,
     .submit-btn:hover,
     .otp-btn:hover,
     .button:hover {
-      background: #1765cc !important;
-      box-shadow: 0 6px 12px rgba(26, 115, 232, 0.2), 0 2px 4px rgba(26, 115, 232, 0.15) !important;
+      background: #1557b0 !important;
+      transform: none;
+      box-shadow: none;
       border-color: transparent;
-    }
-
-    .next-btn:active,
-    .submit-btn:active,
-    .otp-btn:active,
-    .button:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 4px rgba(26, 115, 232, 0.1) !important;
     }
 
     .next-btn:disabled,
     .otp-btn:disabled,
     .button:disabled {
-      background-color: #f1f3f4 !important;
-      color: #9aa0a6 !important;
+      background-color: #d0d0d0 !important;
+      color: #fff !important;
       cursor: not-allowed !important;
-      box-shadow: none !important;
+      opacity: 1 !important;
+      box-shadow: none;
       border-color: transparent;
       border: none;
       transform: none;
@@ -325,22 +317,19 @@
 
     .error-message {
       font-size: 0.8rem;
-      font-weight: 500;
-      color: #ea4335;
+      color: #d93025;
       margin-top: 8px;
       display: none;
     }
 
     .tokens.success,
     .success-message {
-      color: #34a853;
+      color: #28a745;
       font-size: 1rem;
       font-weight: 600;
       margin-top: 20px;
-      background: #e6f4ea;
-      padding: 16px;
-      border-radius: 8px;
-      border: 1px solid #ceead6;
+      background: transparent;
+      border: none;
       box-shadow: none;
       animation: none;
     }
@@ -409,10 +398,28 @@
         raise real capital — built to launch your journey.</p>
     </div>
     <!-- RIGHT SIDE -->
-    <div class="split-right">
-      <div class="right-tagline">/ REGISTRATION</div>
+    <div class="split-right position-relative">
+      <div class="right-tagline" style="margin-bottom: 1.5rem;">/ SEND INQUIRY</div>
+      <p
+        style="font-size: 1.25rem; font-weight: 500; color: #7f8c8d; line-height: 1.6; margin-bottom: 2rem; max-width: 90%;">
+        We're here to bring your concept to life, craft your investor story, or build your pitch deck from the ground
+        up.</p>
+
+      <a href="#" style="
+        position: absolute;
+        right: 0;
+        top: 8rem;
+        background: #25a4ff;
+        color: white;
+        font-size: 1.5rem;
+        padding: 12px 12px 12px 20px;
+        border-radius: 8px 0 0 8px;
+        box-shadow: -2px 2px 10px rgba(0,0,0,0.1);
+        text-decoration: none;
+      ">🚀</a>
+
       <div class="container">
-        <div class="stepper">
+        <div class="stepper" style="display: none !important;">
           <div class="step active" id="step-1-indicator">
             <div class="step-circle">1</div>
             <div class="step-title">STEP 1</div>
