@@ -222,7 +222,7 @@ export default function Page() {
       submitted_at: new Date().toISOString()
     };
 
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/empresario_registrations`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/empresario_registrations?on_conflict=email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
