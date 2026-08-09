@@ -1,5 +1,6 @@
 "use client";
 
+import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://yieubokzioakellfuepn.supabase.co";
@@ -316,9 +317,10 @@ export default function Page() {
 
         .split-container {
           display: flex;
-          min-height: 100vh;
+          min-height: calc(100vh - 82px);
           width: 100%;
           margin: 0;
+          margin-top: 82px;
           padding: 0;
         }
 
@@ -333,8 +335,8 @@ export default function Page() {
           text-align: center;
           color: #fff;
           position: fixed;
-          height: 100vh;
-          top: 0;
+          height: calc(100vh - 82px);
+          top: 82px;
           left: 0;
           z-index: 1;
           overflow: hidden;
@@ -364,15 +366,7 @@ export default function Page() {
         }
 
         .back-btn {
-          color: #999;
-          text-decoration: none;
-          font-size: 0.8rem;
-          font-weight: 700;
-          letter-spacing: 1px;
-          transition: color 0.3s ease;
-          position: absolute;
-          top: 3rem;
-          left: 3rem;
+          display: none !important;
         }
 
         .back-btn:hover {
@@ -415,7 +409,7 @@ export default function Page() {
           margin-left: 50%;
           padding: 4rem 5rem;
           background-color: #fff;
-          min-height: 100vh;
+          min-height: calc(100vh - 82px);
         }
 
         .container {
@@ -692,6 +686,7 @@ export default function Page() {
         }
       `}} />
 
+      <Navbar />
       <div className="split-container">
         {/* Left Side Info Pane */}
         <div className="split-left">
@@ -713,23 +708,6 @@ export default function Page() {
           <p style={{ fontSize: "1.25rem", fontWeight: "500", color: "#7f8c8d", lineHeight: "1.6", marginBottom: "2rem", maxWidth: "90%" }}>
             We're here to bring your concept to life, craft your investor story, or build your pitch deck from the ground up.
           </p>
-          <a
-            href="#"
-            style={{
-              position: "absolute",
-              right: "0",
-              top: "8rem",
-              background: "#25a4ff",
-              color: "white",
-              fontSize: "1.5rem",
-              padding: "12px 12px 12px 20px",
-              borderRadius: "8px 0 0 8px",
-              boxShadow: "-2px 2px 10px rgba(0,0,0,0.1)",
-              textDecoration: "none"
-            }}
-          >
-            🚀
-          </a>
 
           <div className="container">
             {success ? (

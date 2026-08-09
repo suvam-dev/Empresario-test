@@ -1,1 +1,99 @@
 @import "tailwindcss";
+
+/* Custom Hero Background Blur & Centering */
+.hero-section-container {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.hero-bg-blur {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-image: url('/images/event-images/images%20(4).jpeg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  filter: blur(8px) !important; /* Blurs only the background */
+  transform: scale(1.06) !important; /* Zoom in slightly to hide blurred edges */
+  z-index: 0 !important;
+}
+
+/* Ensure overlays sit above the background */
+.opacity-very-light.bg-black,
+.opacity-light.bg-black,
+.opacity-medium.bg-black,
+.opacity-extra-medium.bg-black {
+  z-index: 1 !important;
+}
+
+/* Ensure the main page content container sits on top of all backgrounds */
+.hero-section-container > .container {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Force Navbar and Header to stay on top of all other page layers */
+header,
+header .navbar {
+  z-index: 10000 !important;
+}
+
+/* Force Navbar collapse links to be visible on desktop screen sizes */
+@media (min-width: 992px) {
+  .navbar-collapse {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .navbar-nav {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Reduce navbar top and bottom spacing */
+header .navbar {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+/* Slimmer spacing when sticky-active is scrolling */
+header.sticky-active .navbar {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+/* Override logo max-height to allow larger brand rendering */
+header .navbar-brand img {
+  max-height: 60px !important;
+}
+
+/* Ensure all navbar elements are perfectly vertically centered */
+header .navbar {
+  align-items: center !important;
+}
+
+header .navbar [class*="col-"] {
+  align-items: center !important;
+  display: flex !important;
+}
+
+header .navbar [class*="col-"] .navbar-nav {
+  align-items: center !important;
+}
+
+/* Reduce padding on the brand container to decrease top spacing */
+header .navbar-brand {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+/* Slimmer brand container spacing when sticky scrolling */
+header.sticky .navbar-brand {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
