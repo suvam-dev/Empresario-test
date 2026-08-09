@@ -17,7 +17,7 @@ export async function POST(request) {
 
     // 2. Store OTP in Supabase otp_verifications table
     // We use a POST request with upsert headers (resolution=merge-duplicates)
-    const storeResponse = await fetch(`${SUPABASE_URL}/rest/v1/otp_verifications`, {
+    const storeResponse = await fetch(`${SUPABASE_URL}/rest/v1/otp_verifications?on_conflict=email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
