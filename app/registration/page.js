@@ -104,7 +104,7 @@ export default function Page() {
 <input type="url" placeholder="https://www.example.com" />
 <label>Industry/Domain <span className="required">*</span></label>
 <select required={true}>
-<option value="" disabled={true} selected="">Select One</option>
+<option value="" disabled={true}>Select One</option>
 <option>E-Commerce</option>
 <option>Enterprisetech</option>
 <option>Fintech</option>
@@ -125,20 +125,20 @@ export default function Page() {
 <label>Does your startup aim to solve a social or community
                 problem? <span className="required">*</span></label>
 <select required={true}>
-<option value="" disabled={true} selected="">Select One</option>
+<option value="" disabled={true}>Select One</option>
 <option>Yes</option>
 <option>No</option>
 </select>
 <label>Is your team founded by IIT Kharagpur students, alumni, or
                 faculty? <span className="required">*</span></label>
 <select required={true}>
-<option value="" disabled={true} selected="">Select One</option>
+<option value="" disabled={true}>Select One</option>
 <option>Yes</option>
 <option>No</option>
 </select>
 <label>Is AI/ML a core part of your product or tech stack? <span className="required">*</span></label>
 <select required={true}>
-<option value="" disabled={true} selected="">Select One</option>
+<option value="" disabled={true}>Select One</option>
 <option>Yes</option>
 <option>No</option>
 </select>

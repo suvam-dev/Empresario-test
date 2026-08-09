@@ -28,6 +28,10 @@ DROP_EVENT_ATTRS = {
     "onkeydown", "onkeyup", "onkeypress",
 }
 
+# Attributes that must be silently dropped for all elements
+# 'selected' on <option> is invalid in React — use defaultValue on <select> instead
+ALWAYS_DROP_ATTRS = {"selected"}
+
 # HTML attribute → React JSX prop name mapping
 ATTR_MAP = {
     "class": "className",
@@ -141,6 +145,10 @@ def convert_attrs(node):
 
         # Drop event handlers — jQuery manages these
         if k in DROP_EVENT_ATTRS:
+            continue
+
+        # Drop attributes that are always invalid in React JSX
+        if k in ALWAYS_DROP_ATTRS:
             continue
 
         # Skip attributes with colons unless they are known SVG ones

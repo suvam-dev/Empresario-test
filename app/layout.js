@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
         <Script
           id="main-js-init"
           strategy="afterInteractive"
-          src="/js/main.js"
+          src="/js/main.js?v=2"
         />
       </body>
     </html>
