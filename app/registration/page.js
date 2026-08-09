@@ -143,7 +143,7 @@ export default function Page() {
     const email = formData.email.trim();
     const otp = formData.otp.trim();
 
-    if (!email || !/^[0-9]{6}$/.test(otp)) {
+    if (!email || !/^[a-zA-Z0-9]{6,8}$/.test(otp)) {
       setErrors(prev => ({ ...prev, otp: true }));
       return;
     }
@@ -767,11 +767,11 @@ export default function Page() {
 
                   {otpSent && (
                     <div id="otp-section" style={{ marginTop: "20px" }}>
-                      <label>Enter OTP <span className="required">*</span></label>
+                      <label>Enter Verification Code <span className="required">*</span></label>
                       <input
                         type="text"
-                        maxLength="6"
-                        placeholder="Enter 6-digit OTP code"
+                        maxLength="8"
+                        placeholder="Enter OTP code"
                         required={true}
                         value={formData.otp}
                         disabled={otpVerified}
@@ -779,7 +779,7 @@ export default function Page() {
                       />
                       {errors.otp && (
                         <div className="error-message">
-                          Please enter the valid 6-digit OTP sent to your email.
+                          Please enter the valid verification code sent to your email.
                         </div>
                       )}
                     </div>
