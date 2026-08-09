@@ -10,6 +10,8 @@ function doPost(e) {
       return sendOTP(e);
     } else if (action === "storeOTP" || action === "storeOtp") {
       return storeOTP(e);
+    } else if (action === "sendEmailOTP" || action === "sendEmailOtp") {
+      return sendEmailOTP(e);
     } else if (action === "verifyOTP" || action === "verifyOtp") {
       return verifyOTP(e);
     } else if (action === "presave" || action === "preSave") {
@@ -22,6 +24,32 @@ function doPost(e) {
   } catch (error) {
     console.error("Error in doPost:", error);
     return ContentService.createTextOutput("Server error: " + error.toString());
+  }
+}
+
+function sendEmailOTP(e) {
+  try {
+    const email = e.parameter.email;
+    const otp = e.parameter.otp;
+    if (!email || !otp) {
+      return ContentService.createTextOutput("Email and OTP are required");
+    }
+
+    const subject = "Your OTP for Empresario Registration";
+    const body = `This is your OTP for Empresario early bird registration: ${otp}\n\nIt is valid for 5 minutes.\n\nTeam Empresario\nE-Cell IIT Kharagpur`;
+
+    MailApp.sendEmail({
+      to: email,
+      subject: subject,
+      body: body,
+      replyTo: "Empresario2026@ecell-iitkgp.org",
+      name: "Empresario - E-Cell IIT Kharagpur"
+    });
+
+    return ContentService.createTextOutput("Email sent");
+  } catch (error) {
+    console.error("Error in sendEmailOTP:", error);
+    return ContentService.createTextOutput("Error sending email: " + error.toString());
   }
 }
 
