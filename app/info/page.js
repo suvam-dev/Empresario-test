@@ -13,6 +13,92 @@ export default function Page() {
 
   return (
     <>
+<style dangerouslySetInnerHTML={{ __html: `
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 0;
+            overflow: hidden;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 130px; 
+            bottom: 130px; 
+            left: 50%;
+            width: 2px;
+            background: #e0e0e0;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .timeline-progress {
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            width: 2px;
+            background: #1E3A8A;
+            transform: translateX(-50%);
+            z-index: 1;
+            height: 0px; 
+        }
+        .timeline-ball {
+            position: absolute;
+            top: 130px; 
+            left: 50%;
+            width: 28px;
+            height: 28px;
+            background: #1E3A8A;
+            border: 5px solid #ffffff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            transition: top 0.1s ease-out;
+            box-shadow: 0 0 10px rgba(30, 58, 138, 0.4);
+        }
+        .timeline-item {
+            margin-bottom: 100px;
+            position: relative;
+            z-index: 2;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-number {
+            font-size: 70px;
+            font-style: italic;
+            font-weight: 700;
+            color: #1E3A8A; 
+            line-height: 0.8;
+            margin-right: 25px;
+            font-family: inherit; 
+        }
+        .timeline-h {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1E2033;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            font-family: inherit;
+        }
+        .timeline-p {
+            color: #6B7280;
+            margin-bottom: 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        @media (max-width: 767px) {
+            .timeline-line, .timeline-progress, .timeline-ball {
+                left: 30px;
+            }
+            .timeline-item .col-md-6.pe-md-5, .timeline-item .col-md-6.ps-md-5 {
+                padding-left: 70px !important;
+                padding-right: 20px !important;
+            }
+            .timeline-item .d-flex.justify-content-end {
+                justify-content: flex-start !important;
+            }
+        }
+    ` }} />
 
 
 <header>

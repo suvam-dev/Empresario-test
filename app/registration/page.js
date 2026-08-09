@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://jtrrfhmnonxnjrkeydvl.supabase.co";
-const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0cnJmaG1ub254bmpya2V5ZHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNzE1MjEsImV4cCI6MjA5ODc0NzUyMX0.QmfTni_jHGS3H-ny7oWlTA0kfGqwRmdH9HbM8vCuMUE";
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://yieubokzioakellfuepn.supabase.co";
+const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_F2_qSJzl0v6XVGAyRdOLIg_ocQOkhPN";
 const PROGRESS_KEY = "empresarioRegProgress";
 
 export default function Page() {
@@ -101,7 +101,7 @@ export default function Page() {
     return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
   };
 
-  // 1. Send OTP using Next.js Resend Route
+  // 1. Send OTP using native Supabase Auth REST endpoint
   const handleSendOtp = async () => {
     const email = formData.email.trim();
     if (!validateEmail(email)) {
@@ -111,30 +111,34 @@ export default function Page() {
 
     setOtpSending(true);
     try {
-      const res = await fetch("/api/otp/send", {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email: email,
+          create_user: true, // Sign up the user if they don't exist
+        }),
       });
 
-      const result = await res.json();
       if (!res.ok) {
-        throw new Error(result.error || "Failed to send OTP");
+        const result = await res.json().catch(() => ({}));
+        throw new Error(result.msg || result.message || `Supabase error: ${res.status}`);
       }
 
       setOtpSent(true);
-      alert("A 6-digit verification code has been sent to your email via Resend. Please check your inbox (including your spam folder).");
+      alert("A verification code has been sent to your email directly from Supabase. Please check your inbox.");
     } catch (e) {
       console.error("OTP Send Error:", e);
-      alert("Error sending OTP: " + e.message + ". Please try again.");
+      alert("Error sending OTP: " + e.message + ". Please verify your Supabase email config and try again.");
     } finally {
       setOtpSending(false);
     }
   };
 
-  // 2. Verify OTP using Next.js Google Sheets Route
+  // 2. Verify OTP using native Supabase Auth REST endpoint
   const handleVerifyOtp = async () => {
     const email = formData.email.trim();
     const otp = formData.otp.trim();
@@ -146,17 +150,39 @@ export default function Page() {
 
     setOtpVerifying(true);
     try {
-      const res = await fetch("/api/otp/verify", {
+      // First try signup verification
+      let res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
         },
-        body: JSON.stringify({ email, otp }),
+        body: JSON.stringify({
+          email: email,
+          token: otp,
+          type: "signup",
+        }),
       });
 
-      const result = await res.json();
+      // If signup fails, try magiclink verification (handles returning users)
       if (!res.ok) {
-        throw new Error(result.error || "Invalid verification code");
+        res = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY,
+          },
+          body: JSON.stringify({
+            email: email,
+            token: otp,
+            type: "magiclink",
+          }),
+        });
+      }
+
+      if (!res.ok) {
+        const result = await res.json().catch(() => ({}));
+        throw new Error(result.msg || result.message || "Invalid or expired OTP code.");
       }
 
       setOtpVerified(true);
@@ -165,7 +191,7 @@ export default function Page() {
     } catch (e) {
       console.error("OTP Verification Error:", e);
       setErrors(prev => ({ ...prev, otp: true }));
-      alert("Verification failed: " + e.message + ". Please verify the OTP is correct and try again.");
+      alert("Verification failed: " + e.message + ". Please verify the code and try again.");
     } finally {
       setOtpVerifying(false);
     }

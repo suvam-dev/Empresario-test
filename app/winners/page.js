@@ -13,6 +13,43 @@ export default function Page() {
 
   return (
     <>
+<style id="custom-rotate-override" dangerouslySetInnerHTML={{ __html: `
+    /* Override flip animation for rotate-box */
+    .rotate-box-style-02 .rotate-box {
+        transform-style: flat !important;
+    }
+    .rotate-box-style-02 .rotate-box .front-side,
+    .rotate-box-style-02 .rotate-box .back-side {
+        transform: none !important;
+        transition: all 0.4s ease !important;
+        backface-visibility: visible !important;
+    }
+    .rotate-box-style-02 .rotate-box:hover .front-side {
+        filter: blur(8px);
+        opacity: 0.4;
+        transform: none !important;
+    }
+    .rotate-box-style-02 .rotate-box .back-side {
+        opacity: 0 !important;
+        z-index: 2 !important;
+        pointer-events: none;
+        transform: none !important;
+        background-image: none !important;
+        background-color: rgba(37, 40, 64, 0.7) !important; /* Sidebar blue color */
+    }
+    .rotate-box-style-02 .rotate-box:hover .back-side {
+        opacity: 1 !important;
+        pointer-events: auto;
+        transform: none !important;
+    }
+    
+    /* Reset content positioning inside the rotate-box */
+    .rotate-box-style-02 .rotate-box .rotate-content-front,
+    .rotate-box-style-02 .rotate-box .rotate-content-back {
+        top: 0 !important;
+        transform: none !important;
+    }
+  ` }} />
 
 
 <header>

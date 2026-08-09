@@ -13,6 +13,176 @@ export default function Page() {
 
   return (
     <>
+<style dangerouslySetInnerHTML={{ __html: `
+    .contact-link-margin {
+      margin-right: 20px !important;
+    }
+  ` }} /><style dangerouslySetInnerHTML={{ __html: `
+    /* Global typography overrides for the homepage */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Playfair Display', serif !important;
+    }
+
+    /* Fix vertical rendering issue in the scroll sticky dots */
+    .active-indicator-label {
+      white-space: nowrap !important;
+    }
+
+    /* Fix clipping of the scroll component content under sticky header */
+    .tracks-content-container {
+      padding-top: 15vh !important;
+    }
+  ` }} /><style dangerouslySetInnerHTML={{ __html: `
+    /* CRITICAL OVERRIDE: Global overflow masks destroy position: sticky */
+    body {
+      overflow-x: visible !important;
+    }
+
+    .sticky-tracks-wrapper {
+      display: flex;
+      max-width: 1200px;
+      margin: 0px auto;
+      padding: 0 40px;
+      gap: 60px;
+      /* Pre-requisite for sticky logic to operate on the child */
+      align-items: flex-start;
+      overflow: visible !important;
+    }
+
+    .sticky-tracks-left {
+      flex: 0.8;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 250px;
+      z-index: 10;
+    }
+
+    .sticky-tracks-title {
+      font-size: 3.5rem;
+      color: #1a1a2e;
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: -2px;
+    }
+
+    .sticky-tracks-desc {
+      color: #666;
+      font-size: 1.15rem;
+      line-height: 1.8;
+    }
+
+    .sticky-tracks-right {
+      flex: 1.4;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .sticky-tracks-card {
+      background: #fff;
+      border: 1px solid #f2f3f5;
+      border-radius: 12px;
+      padding: 45px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.03);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sticky-tracks-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .sticky-tracks-card h2 {
+      color: #1a1a2e;
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .sticky-tracks-card p {
+      color: #6a6a8e;
+      line-height: 1.8;
+      margin-bottom: 0px;
+    }
+
+    .sticky-tracks-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .sticky-tracks-pills span {
+      background: #f8f9fc;
+      color: #434c5e;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #edf1f7;
+    }
+
+    @media (max-width: 991px) {
+      .sticky-tracks-wrapper {
+        flex-direction: column;
+        gap: 40px;
+        padding: 0 15px;
+      }
+
+      .sticky-tracks-left {
+        position: relative !important;
+        top: 0 !important;
+      }
+
+      .sticky-tracks-card {
+        padding: 30px;
+      }
+    }
+  ` }} /><style dangerouslySetInnerHTML={{ __html: `
+    .spotlight-card {
+      transition: all 0.3s ease-in-out !important;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      /* Dynamic radial gradient using mouse coordinates */
+      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(0, 115, 255, 0.25),
+          transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+
+    .spotlight-card:hover {
+      transform: translateY(-5px) !important;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    .spotlight-card>* {
+      position: relative;
+      z-index: 1;
+    }
+  ` }} />
 
 
 <header>
@@ -331,114 +501,7 @@ export default function Page() {
 
 
 
-<style dangerouslySetInnerHTML={{ __html: `
-    /* CRITICAL OVERRIDE: Global overflow masks destroy position: sticky */
-    body {
-      overflow-x: visible !important;
-    }
 
-    .sticky-tracks-wrapper {
-      display: flex;
-      max-width: 1200px;
-      margin: 0px auto;
-      padding: 0 40px;
-      gap: 60px;
-      /* Pre-requisite for sticky logic to operate on the child */
-      align-items: flex-start;
-      overflow: visible !important;
-    }
-
-    .sticky-tracks-left {
-      flex: 0.8;
-      position: -webkit-sticky;
-      position: sticky;
-      top: 250px;
-      z-index: 10;
-    }
-
-    .sticky-tracks-title {
-      font-size: 3.5rem;
-      color: #1a1a2e;
-      margin-bottom: 25px;
-      font-weight: 700;
-      letter-spacing: -2px;
-    }
-
-    .sticky-tracks-desc {
-      color: #666;
-      font-size: 1.15rem;
-      line-height: 1.8;
-    }
-
-    .sticky-tracks-right {
-      flex: 1.4;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-
-    .sticky-tracks-card {
-      background: #fff;
-      border: 1px solid #f2f3f5;
-      border-radius: 12px;
-      padding: 45px;
-      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.03);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .sticky-tracks-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-    }
-
-    .sticky-tracks-card h2 {
-      color: #1a1a2e;
-      font-size: 1.6rem;
-      margin-bottom: 15px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .sticky-tracks-card p {
-      color: #6a6a8e;
-      line-height: 1.8;
-      margin-bottom: 0px;
-    }
-
-    .sticky-tracks-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 25px;
-    }
-
-    .sticky-tracks-pills span {
-      background: #f8f9fc;
-      color: #434c5e;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: 1px solid #edf1f7;
-    }
-
-    @media (max-width: 991px) {
-      .sticky-tracks-wrapper {
-        flex-direction: column;
-        gap: 40px;
-        padding: 0 15px;
-      }
-
-      .sticky-tracks-left {
-        position: relative !important;
-        top: 0 !important;
-      }
-
-      .sticky-tracks-card {
-        padding: 30px;
-      }
-    }
-  ` }} />
 <section id="tracks" className="pt-5 pb-5 bg-white" style={{overflow: "visible", marginTop: "250px", marginBottom: "600px", position: "relative", zIndex: "50"}}>
 <div className="sticky-tracks-wrapper">
 
@@ -553,45 +616,7 @@ export default function Page() {
 </div>
 </section>
 
-<style dangerouslySetInnerHTML={{ __html: `
-    .spotlight-card {
-      transition: all 0.3s ease-in-out !important;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
-      position: relative;
-      overflow: hidden;
-    }
 
-    .spotlight-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      /* Dynamic radial gradient using mouse coordinates */
-      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-          rgba(0, 115, 255, 0.25),
-          transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .spotlight-card:hover::before {
-      opacity: 1;
-    }
-
-    .spotlight-card:hover {
-      transform: translateY(-5px) !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
-    }
-
-    .spotlight-card>* {
-      position: relative;
-      z-index: 1;
-    }
-  ` }} />
 <section id="incentives" className="big-section bg-white p-0" style={{marginTop: "600px", paddingTop: "100px", position: "relative", zIndex: "1"}}>
 
 <div className="tracks-scroll-wrapper scroll-circle-wrapper" style={{height: "800vh", position: "relative"}}>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://empresario.ecell-iitkgp.in/sitemap.xml
