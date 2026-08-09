@@ -2489,8 +2489,7 @@
             let activeIndex = this.activeIndex,
               current_slide = this.slides[activeIndex];
             if (!current_slide) return;
-            var
-              anime_el = current_slide.querySelectorAll("[data-anime]"),
+            let anime_el = current_slide.querySelectorAll("[data-anime]"),
               fancy_el = current_slide.querySelectorAll("[data-fancy-text]");
             if (getWindowWidth() > animeBreakPoint) {
               if (anime_el) {
