@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydeSUhxPmlH-OLsZW1yBUszPndmJ1UgNXEQhR0s-Q0uh5iRqseh-dTyIS8os5MkAkcbQ/exec";
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://jtrrfhmnonxnjrkeydvl.supabase.co";
 const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0cnJmaG1ub254bmpya2V5ZHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNzE1MjEsImV4cCI6MjA5ODc0NzUyMX0.QmfTni_jHGS3H-ny7oWlTA0kfGqwRmdH9HbM8vCuMUE";
 const PROGRESS_KEY = "empresarioRegProgress";
@@ -239,59 +238,17 @@ export default function Page() {
     setSubmitting(true);
 
     try {
-      // Step A: Register in Google Sheets via Web App script
-      const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({ action: "register", ...formData }),
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const text = await res.text();
-      console.log("Register response:", text);
-
-      if (text.trim().toLowerCase() === "ok") {
-        // Step B: Save to Supabase DB table
-        await saveToSupabase(formData);
-        
-        // Success
-        setSuccess(true);
-        try {
-          localStorage.removeItem(PROGRESS_KEY);
-        } catch (_) {}
-      } else {
-        throw new Error(text);
-      }
-    } catch (err) {
-      console.error("Backend submission error:", err);
-      // Fallback via no-cors mode if CORS configuration on script rejects direct reading
+      // Save directly to Supabase DB table
+      await saveToSupabase(formData);
+      
+      // Success
+      setSuccess(true);
       try {
-        await fetch(SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({ action: "register", ...formData }),
-        });
-
-        // Save to Supabase DB
-        await saveToSupabase(formData);
-
-        // Assume success if no exception is thrown
-        setSuccess(true);
-        try {
-          localStorage.removeItem(PROGRESS_KEY);
-        } catch (_) {}
-      } catch (fallbackErr) {
-        alert("Registration submission failed: " + fallbackErr.message + ". Please check your connection and try again.");
-      }
+        localStorage.removeItem(PROGRESS_KEY);
+      } catch (_) {}
+    } catch (err) {
+      console.error("Supabase submission error:", err);
+      alert("Registration submission failed: " + err.message + ". Please check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
