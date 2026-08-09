@@ -16,6 +16,8 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/css/icon.min.css" />
         <link rel="stylesheet" href="/css/style.min.css" />
         <link rel="stylesheet" href="/css/responsive.min.css" />
+        {/* Primary dark-theme override — loaded by every page in the original HTML */}
+        <link rel="stylesheet" href="/demos/it-business/it-business.css" />
       </head>
       <body>
         {children}
