@@ -789,7 +789,7 @@ export default function Page() {
                     <button
                       type="button"
                       className="next-btn"
-                      disabled={!otpSent || otpVerified || otpVerifying || formData.otp.length !== 6}
+                      disabled={!otpSent || otpVerified || otpVerifying || formData.otp.length < 6 || formData.otp.length > 8}
                       onClick={handleVerifyOtp}
                     >
                       {otpVerifying ? "Verifying..." : "Verify OTP"}
