@@ -8,6 +8,8 @@ function doPost(e) {
 
     if (action === "sendOTP" || action === "sendOtp") {
       return sendOTP(e);
+    } else if (action === "storeOTP" || action === "storeOtp") {
+      return storeOTP(e);
     } else if (action === "verifyOTP" || action === "verifyOtp") {
       return verifyOTP(e);
     } else if (action === "presave" || action === "preSave") {
@@ -20,6 +22,29 @@ function doPost(e) {
   } catch (error) {
     console.error("Error in doPost:", error);
     return ContentService.createTextOutput("Server error: " + error.toString());
+  }
+}
+
+function storeOTP(e) {
+  try {
+    const email = e.parameter.email;
+    const otp = e.parameter.otp;
+    if (!email || !otp) {
+      return ContentService.createTextOutput("Email and OTP are required");
+    }
+
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(OTP_SHEET_NAME);
+    if (!sheet) {
+      SpreadsheetApp.openById(SHEET_ID).insertSheet(OTP_SHEET_NAME);
+      const newSheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(OTP_SHEET_NAME);
+      newSheet.getRange(1, 1, 1, 3).setValues([["Email", "OTP", "Timestamp"]]);
+    }
+
+    sheet.appendRow([email, otp, new Date()]);
+    return ContentService.createTextOutput("OTP stored");
+  } catch (error) {
+    console.error("Error in storeOTP:", error);
+    return ContentService.createTextOutput("Error storing OTP: " + error.toString());
   }
 }
 

@@ -244,22 +244,41 @@ def pre_process_html(html):
 
 
 def html_file_to_jsx(html_content):
-    """Convert a full HTML file to JSX body string."""
-    # Extract body content
-    body_match = re.search(r"<body[^>]*>(.*?)</body>", html_content, re.DOTALL | re.IGNORECASE)
-    body_html = body_match.group(1) if body_match else html_content
+    """Convert a full HTML file to JSX body string, preserving all style tags."""
+    # Pre-process to fix malformed attributes on the entire html
+    processed_html = pre_process_html(html_content)
 
     # Remove cdn-cgi Cloudflare scripts
-    body_html = re.sub(
-        r'<script[^>]*cdn-cgi[^>]*></script>', '', body_html, flags=re.IGNORECASE
+    processed_html = re.sub(
+        r'<script[^>]*cdn-cgi[^>]*></script>', '', processed_html, flags=re.IGNORECASE
     )
 
-    # Pre-process to fix malformed attributes
-    body_html = pre_process_html(body_html)
+    soup = BeautifulSoup(processed_html, "html.parser")
 
-    soup = BeautifulSoup(body_html, "html.parser")
+    # Extract all style tags from the entire document (head and body)
+    style_tags = soup.find_all("style")
+    styles_jsx = ""
+    for style in style_tags:
+        styles_jsx += convert_node_to_jsx(style)
 
-    return "".join(convert_node_to_jsx(c) for c in soup.contents)
+    # Extract body content
+    body = soup.find("body")
+    if body:
+        # Convert all direct children of body to JSX, excluding style tags (already handled)
+        body_jsx = ""
+        for c in body.contents:
+            if getattr(c, 'name', None) == 'style':
+                continue
+            body_jsx += convert_node_to_jsx(c)
+    else:
+        # If no body, convert everything excluding styles
+        body_jsx = ""
+        for c in soup.contents:
+            if getattr(c, 'name', None) == 'style':
+                continue
+            body_jsx += convert_node_to_jsx(c)
+
+    return styles_jsx + "\n" + body_jsx
 
 
 def main():
